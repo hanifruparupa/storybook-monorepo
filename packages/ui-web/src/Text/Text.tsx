@@ -40,7 +40,9 @@ export function Text({
     fontSize: theme.fontSize,
     fontWeight: theme.fontWeight,
     color: theme.color,
-    lineHeight: theme.lineHeight,
+    // Tokens store line-height in px (React Native semantics). CSS treats a
+    // unitless number as a multiplier, so we must append "px" on the web.
+    lineHeight: `${theme.lineHeight}px`,
     margin: 0,
     ...truncationStyle,
     ...style,

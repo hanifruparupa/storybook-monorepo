@@ -64,6 +64,9 @@ export const lineHeight = {
   lg: 24,
 } as const;
 
+// NOTE: line-height values are in **px** (React Native semantics). Web/CSS must
+// append "px" — a unitless CSS line-height is a multiplier, not pixels.
+
 export const fontWeight = {
   regular: "400",
   medium: "500",
