@@ -1,0 +1,29 @@
+{
+  "name": "monorepo-storybook",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.12.4",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "web": "pnpm --filter web dev",
+    "mobile": "pnpm --filter mobile start",
+    "storybook:web": "pnpm --filter @repo/ui-web storybook",
+    "storybook:rn-web": "pnpm --filter @repo/ui-native storybook",
+    "storybook:all": "pnpm --filter storybook storybook",
+    "build-storybook:all": "pnpm --filter storybook build-storybook",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "19.2.3",
+      "react-dom": "19.2.3",
+      "react-native": "0.87.1"
+    }
+  }
+}

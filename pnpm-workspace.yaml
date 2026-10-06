@@ -1,0 +1,22 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# pnpm 10 blocks dependency build scripts by default. Allow the ones RN/Next need.
+onlyBuiltDependencies:
+  - "@react-native-community/cli"
+  - "@react-native-community/cli-platform-android"
+  - "@react-native-community/cli-platform-ios"
+  - esbuild
+  - react-native
+  - sharp
+  - unrs-resolver
+
+# Single-version pins shared across workspaces.
+# React/RN are pinned to exactly what React Native 0.87.1 ships with.
+catalog:
+  react: 19.2.3
+  react-dom: 19.2.3
+  react-native: 0.87.1
+  react-native-web: 0.21.3
+  typescript: 6.0.3
