@@ -18,7 +18,25 @@ const meta = {
       control: "select",
       options: ["sm", "md", "lg"],
     },
+    fullWidth: { control: "boolean" },
+    disabled: { control: "boolean" },
   },
+  // A bounded container gives `fullWidth` a definite width to fill; the default
+  // `centered` layout is shrink-to-fit, which hides the effect.
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          width: 320,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "stretch",
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Button>;
 
 export default meta;

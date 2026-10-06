@@ -19,10 +19,13 @@ const meta = {
       control: "select",
       options: ["sm", "md", "lg"],
     },
+    fullWidth: { control: "boolean" },
+    disabled: { control: "boolean" },
   },
+  // Bounded, stretch container so `fullWidth` has a definite cross-axis to fill.
   decorators: [
     (Story) => (
-      <View style={{ padding: 16, alignItems: "flex-start" }}>
+      <View style={{ width: 320, padding: 16, alignItems: "stretch" }}>
         <Story />
       </View>
     ),
