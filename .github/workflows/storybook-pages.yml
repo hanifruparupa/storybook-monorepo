@@ -1,11 +1,8 @@
-# NOTE: GitHub Pages on this PRIVATE repo is blocked by the current GitHub plan
-# ("Your current plan does not support GitHub Pages for this repository.").
-# This workflow is therefore MANUAL-ONLY. To enable auto-deploy, either make the
-# repo public, upgrade the plan, or switch to another host, then restore the
-# `push: branches: [main]` trigger below.
 name: Deploy Storybook
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
