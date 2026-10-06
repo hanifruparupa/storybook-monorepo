@@ -1,6 +1,7 @@
 import type { ButtonProps } from "@repo/primitives";
-import { resolveButtonTheme } from "@repo/primitives";
+import { resolveButtonSize, resolveButtonTheme } from "@repo/primitives";
 import { Pressable, Text, StyleSheet, type StyleProp, type ViewStyle } from "react-native";
+import { useBreakpoint } from "../hooks/useBreakpoint";
 
 export interface NativeButtonProps extends ButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -16,6 +17,8 @@ export function Button({
   testID,
   style,
 }: NativeButtonProps) {
+  const breakpoint = useBreakpoint();
+  const resolvedSize = resolveButtonSize(size, breakpoint);
   return (
     <Pressable
       accessibilityRole="button"
@@ -25,7 +28,7 @@ export function Button({
       testID={testID}
       onPress={disabled ? undefined : onPress}
       style={({ pressed }) => {
-        const t = resolveButtonTheme(variant, size, disabled, pressed);
+        const t = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
         return [
           styles.base,
           {
@@ -44,7 +47,7 @@ export function Button({
       }}
     >
       {({ pressed }) => {
-        const t = resolveButtonTheme(variant, size, disabled, pressed);
+        const t = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
         return (
           <Text
             style={[

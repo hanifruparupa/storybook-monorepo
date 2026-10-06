@@ -74,3 +74,12 @@ export const FullWidth: Story = {
     fullWidth: true,
   },
 };
+
+export const Responsive: Story = {
+  args: {
+    size: { xs: "sm", sm: "sm", md: "md", lg: "lg", xl: "lg" },
+  },
+  parameters: {
+    notes: "Size changes with the device width / orientation.",
+  },
+};

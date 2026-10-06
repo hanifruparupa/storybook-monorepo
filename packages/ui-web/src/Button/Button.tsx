@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { ButtonProps } from "@repo/primitives";
-import { resolveButtonTheme } from "@repo/primitives";
+import { resolveButtonSize, resolveButtonTheme } from "@repo/primitives";
+import { useBreakpoint } from "../hooks/useBreakpoint";
 
 export interface WebButtonProps extends ButtonProps {
   style?: React.CSSProperties;
@@ -23,7 +24,10 @@ export function Button({
   const [hovered, setHovered] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
 
-  const theme = resolveButtonTheme(variant, size, disabled, pressed);
+  const breakpoint = useBreakpoint();
+  const resolvedSize = resolveButtonSize(size, breakpoint);
+
+  const theme = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
 
   const buttonStyle: React.CSSProperties = {
     backgroundColor: theme.backgroundColor,

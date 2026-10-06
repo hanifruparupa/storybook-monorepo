@@ -65,3 +65,12 @@ export const FullWidth: Story = {
     fullWidth: true,
   },
 };
+
+/**
+ * Responsive size — resize the browser to see the size change.
+ */
+export const Responsive: Story = {
+  args: {
+    size: { xs: "sm", sm: "sm", md: "md", lg: "lg", xl: "lg" },
+  },
+};

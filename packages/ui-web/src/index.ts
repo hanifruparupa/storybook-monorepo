@@ -16,3 +16,4 @@ export { Price } from "./Price/Price";
 export type { WebPriceProps } from "./Price/Price";
 export { ProductCard } from "./ProductCard/ProductCard";
 export type { WebProductCardProps } from "./ProductCard/ProductCard";
+export { useBreakpoint, BreakpointProvider } from "./hooks/useBreakpoint";
