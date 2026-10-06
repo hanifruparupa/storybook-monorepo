@@ -81,6 +81,24 @@ export const controlHeight = {
   lg: 52,
 } as const;
 
+/**
+ * Viewport breakpoints (px) — a shared scale for responsive sizing.
+ * `xs` is the base (0). Order is significant; see `breakpointOrder`.
+ */
+export const breakpoints = {
+  xs: 0,
+  sm: 480,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  xxl: 1536,
+} as const;
+
+export type Breakpoint = keyof typeof breakpoints;
+
+/** Ascending breakpoint order (base → largest). */
+export const breakpointOrder = ["xs", "sm", "md", "lg", "xl", "xxl"] as const;
+
 export type ColorToken = keyof typeof colors;
 export type SpaceToken = keyof typeof space;
 export type RadiusToken = keyof typeof radii;

@@ -11,6 +11,8 @@
 import type { ReactNode } from "react";
 
 import {
+  breakpointOrder,
+  breakpoints,
   colors,
   controlHeight,
   fontSize,
@@ -18,6 +20,7 @@ import {
   lineHeight,
   radii,
   space,
+  type Breakpoint,
   type FontWeight,
 } from "@repo/tokens";
 
@@ -466,4 +469,57 @@ export interface ProductCardProps {
   rating?: number;
   reviewCount?: number;
   testID?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Responsive sizing (platform-agnostic)
+//
+// These helpers hold the *mapping rules* (breakpoint -> value). Measuring the
+// viewport is platform-specific and lives in each app/component (web:
+// matchMedia / innerWidth; native: useWindowDimensions).
+// ---------------------------------------------------------------------------
+
+/** A value that may vary per viewport breakpoint, e.g. `{ xs: "sm", lg: "lg" }`. */
+export type Responsive<T> = Partial<Record<Breakpoint, T>>;
+
+/** Button size that is either fixed or per-breakpoint. */
+export type ResponsiveSize = Responsive<ButtonSize>;
+
+/** Largest breakpoint whose min-width is <= `width` (base `xs` = 0). */
+export function resolveBreakpoint(width: number): Breakpoint {
+  let current: Breakpoint = "xs";
+  for (const bp of breakpointOrder) {
+    if (width >= breakpoints[bp]) current = bp;
+  }
+  return current;
+}
+
+/**
+ * Resolve a responsive value for the active breakpoint. A breakpoint without an
+ * explicit value inherits the nearest smaller breakpoint that defines one;
+ * otherwise `fallback` is returned.
+ */
+export function resolveResponsiveValue<T>(
+  value: Responsive<T> | undefined,
+  breakpoint: Breakpoint,
+  fallback: T,
+): T {
+  if (!value) return fallback;
+  const start = breakpointOrder.indexOf(breakpoint);
+  for (let i = start; i >= 0; i--) {
+    const bp = breakpointOrder[i];
+    if (bp === undefined) continue;
+    const candidate = value[bp];
+    if (candidate !== undefined) return candidate;
+  }
+  return fallback;
+}
+
+/** Convenience wrapper for Button sizes (default fallback `md`). */
+export function resolveResponsiveSize(
+  size: ResponsiveSize | undefined,
+  breakpoint: Breakpoint,
+  fallback: ButtonSize = "md",
+): ButtonSize {
+  return resolveResponsiveValue(size, breakpoint, fallback);
 }

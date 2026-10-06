@@ -95,6 +95,17 @@ Defined in `packages/tokens/src/index.ts`:
   (default/pressed/disabled) matches. Divergence in *values* is a design bug;
   divergence in *medium* (DOM vs RN) is expected.
 
+### 5.4 Responsive sizing
+- **MUST**: breakpoint values come from `@repo/tokens` (`breakpoints`, `breakpointOrder`,
+  `Breakpoint`).
+- **MUST**: the breakpoint → value mapping uses the shared pure helpers in
+  `@repo/primitives` (`resolveBreakpoint`, `resolveResponsiveValue`, `resolveResponsiveSize`,
+  `Responsive<T>`). Do **not** re-implement the mapping per platform.
+- Measuring the viewport **MUST** stay platform-specific: web uses `matchMedia` /
+  `innerWidth`, native uses `useWindowDimensions()`. Primitives never read the viewport.
+- **MUST NOT**: shrink interactive controls below 44px on touch at `md`+; `xs`/`sm` are
+  for non-primary/inline controls.
+
 ---
 
 ## 6. Variants, sizes, and naming
