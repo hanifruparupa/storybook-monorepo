@@ -12,6 +12,8 @@ const preview: Preview = {
       },
     },
     layout: "centered",
+    // Fail Storybook tests on accessibility violations (run via the Vitest addon).
+    a11y: { test: "error" },
     viewport: {
       options: { ...MINIMAL_VIEWPORTS, ...deviceViewports },
     },

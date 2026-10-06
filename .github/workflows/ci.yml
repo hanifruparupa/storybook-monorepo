@@ -17,7 +17,7 @@ jobs:
   verify:
     name: typecheck · build · test
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,3 +53,9 @@ jobs:
 
       - name: Test React Native app
         run: pnpm --filter mobile test
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter storybook exec playwright install --with-deps chromium
+
+      - name: Test Storybook (Vitest + browser)
+        run: pnpm --filter storybook test-storybook
