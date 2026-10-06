@@ -1,0 +1,30 @@
+{
+  "name": "storybook",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "storybook": "storybook dev -p 6008",
+    "build-storybook": "storybook build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/primitives": "workspace:*",
+    "@repo/tokens": "workspace:*",
+    "@repo/ui-native": "workspace:*",
+    "@repo/ui-web": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "10.6.1",
+    "@storybook/addon-docs": "10.6.1",
+    "@storybook/react": "10.6.1",
+    "@storybook/react-native-web-vite": "10.6.1",
+    "@types/react": "^19.2.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-native": "catalog:",
+    "react-native-web": "catalog:",
+    "storybook": "10.6.1",
+    "typescript": "catalog:",
+    "vite": "^7.0.0"
+  }
+}
