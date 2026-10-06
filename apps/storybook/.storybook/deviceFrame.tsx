@@ -14,6 +14,7 @@ export function IPhoneFrame({ children }: { children: React.ReactNode }): React.
         padding: 12,
         width: 417,
         maxWidth: "100%",
+        margin: "0 auto",
         boxSizing: "border-box",
         boxShadow: "0 20px 50px rgba(0,0,0,.35)",
         position: "relative",
@@ -78,9 +79,11 @@ export function LaptopFrame({ children }: { children: React.ReactNode }): React.
         display: "flex",
         flexDirection: "column",
         alignItems: "stretch",
-        maxWidth: "100%",
         boxSizing: "border-box",
-        width: "min(1000px, 100%)",
+        // Definite width from the viewport (not `100%`, which collapses under
+        // Storybook's shrink-to-fit centered layout).
+        width: "min(1000px, 92vw)",
+        margin: "0 auto",
       }}
     >
       <div
@@ -88,8 +91,7 @@ export function LaptopFrame({ children }: { children: React.ReactNode }): React.
           background: "#111827",
           borderRadius: 16,
           padding: 12,
-          width: "min(1000px, 100%)",
-          maxWidth: "100%",
+          width: "100%",
           boxSizing: "border-box",
           boxShadow: "0 18px 40px rgba(0,0,0,.25)",
         }}
@@ -115,7 +117,7 @@ export function LaptopFrame({ children }: { children: React.ReactNode }): React.
             background: "#FFFFFF",
             borderRadius: 8,
             height: 600,
-            maxWidth: "100%",
+            width: "100%",
             boxSizing: "border-box",
             overflow: "auto",
             display: "flex",
@@ -134,7 +136,6 @@ export function LaptopFrame({ children }: { children: React.ReactNode }): React.
           borderBottomLeftRadius: 10,
           borderBottomRightRadius: 10,
           marginTop: 0,
-          maxWidth: "112%",
           boxSizing: "border-box",
         }}
       />
