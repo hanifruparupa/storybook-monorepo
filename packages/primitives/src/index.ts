@@ -32,7 +32,8 @@ export interface ButtonProps {
   label: string;
   onPress?: () => void;
   variant?: ButtonVariant;
-  size?: ButtonSize;
+  /** Fixed size, or a value per viewport breakpoint (e.g. `{ xs: "sm", lg: "lg" }`). */
+  size?: ButtonSize | ResponsiveSize;
   disabled?: boolean;
   fullWidth?: boolean;
   testID?: string;
@@ -521,5 +522,18 @@ export function resolveResponsiveSize(
   breakpoint: Breakpoint,
   fallback: ButtonSize = "md",
 ): ButtonSize {
+  return resolveResponsiveValue(size, breakpoint, fallback);
+}
+
+/**
+ * Resolve a Button `size` that may be fixed (`"md"`) or per-breakpoint
+ * (`{ xs: "sm", lg: "lg" }`) into a single size for the active breakpoint.
+ */
+export function resolveButtonSize(
+  size: ButtonSize | ResponsiveSize | undefined,
+  breakpoint: Breakpoint,
+  fallback: ButtonSize = "md",
+): ButtonSize {
+  if (typeof size === "string") return size;
   return resolveResponsiveValue(size, breakpoint, fallback);
 }
