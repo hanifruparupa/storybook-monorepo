@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { CSSProperties } from "react";
 import type { ProductCardProps } from "@repo/primitives";
+import { formatCurrency, resolveCashbackTheme } from "@repo/primitives";
 import { colors, radii, space } from "@repo/tokens";
 import { Text } from "../Text/Text";
 import { Image } from "../Image/Image";
@@ -24,6 +25,7 @@ export function ProductCard({
   originalPrice,
   discountPercent,
   promoText,
+  cashback,
   rating,
   reviewCount,
   testID,
@@ -38,6 +40,9 @@ export function ProductCard({
     ...style,
   };
 
+  const cashbackTheme = resolveCashbackTheme();
+  const hasCashback = cashback !== undefined;
+
   const content = (
     <>
       <div style={{ position: "relative" }}>
@@ -46,13 +51,77 @@ export function ProductCard({
           <Badge
             variant="chip"
             label={badgeLabel}
+            style={
+              hasCashback
+                ? {
+                    position: "absolute",
+                    top: space.sm,
+                    left: space.sm,
+                    boxShadow: "0 1px 4px rgba(16,24,40,.25)",
+                  }
+                : {
+                    position: "absolute",
+                    left: space.sm,
+                    bottom: space.sm,
+                    boxShadow: "0 1px 4px rgba(16,24,40,.25)",
+                  }
+            }
+          />
+        ) : null}
+        {cashback !== undefined ? (
+          <div
             style={{
               position: "absolute",
-              left: space.sm,
-              bottom: space.sm,
-              boxShadow: "0 1px 4px rgba(16,24,40,.25)",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: space.xs,
+              padding: `${space.xs}px ${space.sm}px`,
+              backgroundColor: cashbackTheme.backgroundColor,
             }}
-          />
+          >
+            <Text
+              variant="label"
+              style={{ color: cashbackTheme.labelColor, fontWeight: 600 }}
+            >
+              {cashback.label ?? "Cashback"}
+            </Text>
+            <Text
+              variant="caption"
+              style={{ color: cashbackTheme.labelColor, fontSize: 11 }}
+            >
+              {cashback.prefix ?? "hingga"}
+            </Text>
+            <Text
+              variant="body"
+              style={{
+                color: cashbackTheme.textColor,
+                fontWeight: 700,
+                fontSize: cashbackTheme.amountFontSize,
+              }}
+            >
+              {formatCurrency(cashback.amount, { abbreviate: true })}
+            </Text>
+            {cashback.freeShipping === true ? (
+              <span
+                style={{
+                  marginLeft: "auto",
+                  backgroundColor: cashbackTheme.shippingBackgroundColor,
+                  color: cashbackTheme.shippingTextColor,
+                  borderRadius: radii.sm,
+                  padding: `${space.xs}px ${space.sm}px`,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                GRATIS ONGKIR
+              </span>
+            ) : null}
+          </div>
         ) : null}
       </div>
 

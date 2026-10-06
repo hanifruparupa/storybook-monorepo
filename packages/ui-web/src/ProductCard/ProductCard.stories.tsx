@@ -61,3 +61,15 @@ export const Simple: Story = {
     reviewCount: undefined,
   },
 };
+
+export const WithCashback: Story = {
+  args: {
+    cashback: { amount: 900000 },
+  },
+};
+
+export const WithCashbackAndShipping: Story = {
+  args: {
+    cashback: { amount: 900000, freeShipping: true },
+  },
+};
