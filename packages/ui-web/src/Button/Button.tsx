@@ -49,7 +49,9 @@ export function Button({
     width: fullWidth ? "100%" : undefined,
     maxWidth: "100%",
     cursor: disabled ? "not-allowed" : "pointer",
-    opacity: hovered && !disabled && !pressed ? 0.92 : theme.opacity,
+    // Keep full opacity on hover: lowering it lightens the background and
+    // breaks WCAG color-contrast for the label. Hover feedback = boxShadow.
+    opacity: theme.opacity,
     boxShadow:
       hovered && !disabled ? "0 2px 8px rgba(0, 0, 0, 0.12)" : "none",
     transition:

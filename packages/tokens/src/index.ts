@@ -16,12 +16,12 @@ export const colors = {
   text: "#0B1220",
   textMuted: "#5B6472",
   disabledBg: "#E7EAF0",
-  disabledText: "#9AA3B2",
+  disabledText: "#5B6472",
   ghostPressed: "#EEF3FF",
   danger: "#D92D20",
   dangerBorder: "#F97066",
   /** Product price (orange-red). */
-  price: "#E8590C",
+  price: "#C2410C",
   /** Discount badge (red). */
   discount: "#E11D48",
   /** Rating star (amber). */
@@ -34,7 +34,7 @@ export const colors = {
   /** Cashback banner (yellow). */
   cashbackBg: "#FFD400",
   cashbackText: "#161616",
-  cashbackLabel: "#5B6472",
+  cashbackLabel: "#4B5563",
 } as const;
 
 export const radii = {
