@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 import { View } from "react-native";
 import { Button } from "./Button";
 
@@ -84,5 +84,28 @@ export const Responsive: Story = {
   },
   parameters: {
     notes: "Size changes with the device width / orientation.",
+  },
+};
+
+/** Interaction: clicking fires onPress. */
+export const ClickCallsOnPress: Story = {
+  args: { label: "Click me", onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button"));
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+  },
+};
+
+/** Interaction: a disabled button does not fire onPress. */
+export const DisabledDoesNotFire: Story = {
+  args: { label: "Disabled", disabled: true, onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+    // RNW sets pointer-events:none on a disabled Pressable, so assert the
+    // disabled state instead of clicking.
+    await expect(button).toBeDisabled();
+    await expect(args.onPress).not.toHaveBeenCalled();
   },
 };

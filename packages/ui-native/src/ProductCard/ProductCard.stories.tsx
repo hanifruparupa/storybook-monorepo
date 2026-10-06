@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 import { View } from "react-native";
 import { ProductCard } from "./ProductCard";
 
@@ -68,5 +68,30 @@ export const WithCashback: Story = {
 export const WithCashbackAndShipping: Story = {
   args: {
     cashback: { amount: 900000, freeShipping: true },
+  },
+};
+
+/** Interaction: clicking the card fires onPress. */
+export const ClickCallsOnPress: Story = {
+  args: { onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button"));
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+  },
+};
+
+/** Content: the title and formatted price are rendered. */
+export const ShowsTitleAndPrice: Story = {
+  args: {
+    title: "Krisbow Sync Smart Air Purifier 48 m2 CADR 400 m3/jam",
+    price: 2699000,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByText(/Krisbow Sync Smart Air Purifier/),
+    ).toBeInTheDocument();
+    await expect(canvas.getByText("Rp2.699.000")).toBeInTheDocument();
   },
 };

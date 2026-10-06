@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 import { Button } from "./Button";
 
 const meta = {
@@ -90,5 +90,37 @@ export const FullWidth: Story = {
 export const Responsive: Story = {
   args: {
     size: { xs: "sm", sm: "sm", md: "md", lg: "lg", xl: "lg" },
+  },
+};
+
+/** Interaction: clicking fires onPress. */
+export const ClickCallsOnPress: Story = {
+  args: { label: "Click me", onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button"));
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+  },
+};
+
+/** Interaction: a disabled button does not fire onPress. */
+export const DisabledDoesNotFire: Story = {
+  args: { label: "Disabled", disabled: true, onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button"));
+    await expect(args.onPress).not.toHaveBeenCalled();
+  },
+};
+
+/** Interaction: the button is keyboard-operable (Enter). */
+export const KeyboardActivates: Story = {
+  args: { label: "Keyboard", onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+    button.focus();
+    await userEvent.keyboard("{Enter}");
+    await expect(args.onPress).toHaveBeenCalled();
   },
 };
