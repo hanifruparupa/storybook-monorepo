@@ -88,6 +88,13 @@ Both packages implement the same contracts from `@repo/primitives`:
 |---|---|---|---|
 | `Button` | DOM `<button>` | RN `Pressable` | variants `primary\|secondary\|ghost`, sizes `sm\|md\|lg`, disabled, fullWidth |
 | `TextInput` | DOM `<input>` | RN `TextInput` | label, placeholder, left/right icon slots, focused/blur/disabled/error states |
+| `Text` (atom) | `<span>` | RN `Text` | variants `title\|body\|caption\|price\|priceOriginal\|label`, truncation |
+| `Image` (atom) | `<img>` | RN `Image` | aspect-ratio, radius, cover |
+| `Card` (atom) | `<div>` | RN `View` | variants `plain\|outlined\|elevated` |
+| `Badge` (atom) | `<span>` | RN `View`+`Text` | variants `neutral\|discount\|info\|chip` |
+| `Rating` (atom) | row | row | star value + review count |
+| `Price` (atom) | row | row | original (strikethrough) + discount `%` + current, `formatCurrency` (Rp, `.` thousands, "ribu/juta") |
+| `ProductCard` (molecule) | DOM | RN | image + corner chip + 2-line title + price + promo strip + rating |
 
 Each component ships stories under `Web/*` and `Native/*`, aggregated by `apps/storybook`.
 

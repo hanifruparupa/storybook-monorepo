@@ -158,7 +158,8 @@ Defined in `packages/tokens/src/index.ts`:
 - [ ] All values derived from `@repo/tokens`.
 - [ ] Verification gates from `ARCHITECTURE.md` §10 pass.
 
-> Reference implementations to copy: `Button` and `TextInput` (contract + resolver in
+> Reference implementations to copy: atoms (`Text`, `Image`, `Card`, `Badge`, `Rating`,
+> `Price`), the `ProductCard` molecule, and `Button`/`TextInput` (contract + resolver in
 > `@repo/primitives`; DOM in `@repo/ui-web`; RN in `@repo/ui-native`; stories in both).
 
 ---
