@@ -19,7 +19,11 @@ const config: StorybookConfig = {
     "../../../packages/ui-web/src/**/*.stories.@(js|jsx|ts|tsx)",
     "../../../packages/ui-native/src/**/*.stories.@(js|jsx|ts|tsx)",
   ],
-  addons: ["@storybook/addon-docs", "@storybook/addon-a11y"],
+  addons: [
+    "@storybook/addon-docs",
+    "@storybook/addon-a11y",
+    "@storybook/addon-vitest",
+  ],
   framework: {
     name: "@storybook/react-native-web-vite",
     options: {},
