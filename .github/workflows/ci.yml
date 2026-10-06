@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: typecheck · build · test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck (all workspaces)
+        run: pnpm typecheck
+
+      - name: Build web Storybook (@repo/ui-web)
+        run: pnpm --filter @repo/ui-web build-storybook
+
+      - name: Build native Storybook preview (@repo/ui-native)
+        run: pnpm --filter @repo/ui-native build-storybook
+
+      - name: Build aggregate Storybook (apps/storybook)
+        run: pnpm --filter storybook build-storybook
+
+      - name: Build Next.js app
+        run: pnpm --filter web build
+
+      - name: Test React Native app
+        run: pnpm --filter mobile test

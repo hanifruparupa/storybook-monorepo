@@ -1,5 +1,7 @@
 # monorepo-storybook
 
+[![CI](https://github.com/hanifruparupa/storybook-monorepo/actions/workflows/ci.yml/badge.svg)](https://github.com/hanifruparupa/storybook-monorepo/actions/workflows/ci.yml)
+
 A pnpm workspace monorepo with a **Next.js website** and a **React Native app** that live in the same repo. The web and mobile teams each own their own UI implementation, while sharing a **framework-agnostic foundation** (design tokens + headless component logic).
 
 ## Architecture (shared contract, per-platform implementations)
