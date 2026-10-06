@@ -418,6 +418,38 @@ export function resolveDiscountPercent(price: number, originalPrice?: number): n
 // ProductCard (molecule) — composes the atoms above.
 // ---------------------------------------------------------------------------
 
+export interface ProductCardCashback {
+  amount: number;
+  /** Leading label. Defaults to "Cashback". */
+  label?: string;
+  /** Small word before the amount. Defaults to "hingga". */
+  prefix?: string;
+  /** Show the "GRATIS ONGKIR" shipping badge. Defaults to false. */
+  freeShipping?: boolean;
+}
+
+export interface CashbackTheme {
+  backgroundColor: string;
+  textColor: string;
+  labelColor: string;
+  shippingBackgroundColor: string;
+  shippingTextColor: string;
+  fontSize: number;
+  amountFontSize: number;
+}
+
+export function resolveCashbackTheme(): CashbackTheme {
+  return {
+    backgroundColor: colors.cashbackBg,
+    textColor: colors.cashbackText,
+    labelColor: colors.cashbackLabel,
+    shippingBackgroundColor: colors.discount,
+    shippingTextColor: colors.onPrimary,
+    fontSize: fontSize.sm,
+    amountFontSize: fontSize.md,
+  };
+}
+
 export interface ProductCardProps {
   imageUrl: string;
   imageAlt?: string;
@@ -429,6 +461,8 @@ export interface ProductCardProps {
   discountPercent?: number;
   /** Promo strip text, e.g. "Harga spesial ruparupa rewar…". */
   promoText?: string;
+  /** Optional cashback banner over the bottom of the image. */
+  cashback?: ProductCardCashback;
   rating?: number;
   reviewCount?: number;
   testID?: string;

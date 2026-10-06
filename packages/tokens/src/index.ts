@@ -31,6 +31,10 @@ export const colors = {
   promoText: "#1A56DB",
   /** Media placeholder background. */
   imageBg: "#F3F4F6",
+  /** Cashback banner (yellow). */
+  cashbackBg: "#FFD400",
+  cashbackText: "#161616",
+  cashbackLabel: "#5B6472",
 } as const;
 
 export const radii = {
