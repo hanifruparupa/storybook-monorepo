@@ -24,6 +24,11 @@ const config: StorybookConfig = {
     name: "@storybook/react-native-web-vite",
     options: {},
   },
+  // Relative asset URLs so the static build works when hosted from a subpath
+  // (e.g. GitHub Pages at https://<user>.github.io/<repo>/).
+  async viteFinal(config) {
+    return { ...config, base: "./" };
+  },
 };
 
 export default config;

@@ -78,6 +78,7 @@ pnpm storybook:rn-web   # RN component preview on web   → http://localhost:600
 - `@repo/ui-native` → `@storybook/react-native-web-vite` (RN rendered via react-native-web).
 - `apps/storybook` → aggregate portal; reads both packages' stories into one URL.
 - Storybook is **browser-only** — there is no on-device Storybook.
+- The aggregate portal is deployed to GitHub Pages on every push to `main`: <https://hanifruparupa.github.io/storybook-monorepo/>
 
 ## Shared components
 
