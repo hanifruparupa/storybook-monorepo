@@ -1,6 +1,41 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "storybook/test";
-import { TextInput } from "./TextInput";
+import { expect, fn, userEvent, within } from "storybook/test";
+import { TextInput, type WebTextInputProps } from "./TextInput";
+
+/** Stateful wrapper so interaction tests can type into a controlled input. */
+function StatefulTextInput(props: WebTextInputProps) {
+  const [value, setValue] = React.useState(props.value);
+  return (
+    <TextInput
+      {...props}
+      value={value}
+      onChangeText={(text) => {
+        props.onChangeText?.(text);
+        setValue(text);
+      }}
+    />
+  );
+}
+
+/** Stateful wrapper that also clears the value from the right icon. */
+function ClearableTextInput(props: WebTextInputProps) {
+  const [value, setValue] = React.useState(props.value);
+  return (
+    <TextInput
+      {...props}
+      value={value}
+      onChangeText={(text) => {
+        props.onChangeText?.(text);
+        setValue(text);
+      }}
+      onRightIconPress={() => {
+        props.onRightIconPress?.();
+        setValue("");
+      }}
+    />
+  );
+}
 
 const searchIcon = (
   <svg
@@ -91,5 +126,64 @@ export const WithBothIcons: Story = {
     leftIcon: searchIcon,
     rightIcon: clearIcon,
     onRightIconPress: fn(),
+  },
+};
+
+/**
+ * Interaction: typing updates the controlled value and calls `onChangeText`.
+ */
+export const TypingUpdatesValue: Story = {
+  args: { label: "Full name", placeholder: "Jane Doe", value: "" },
+  render: (args) => <StatefulTextInput {...args} />,
+  play: async ({ canvasElement, args, step }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText("Full name");
+    await step("type a name", async () => {
+      await userEvent.type(input, "Jane Doe");
+    });
+    await expect(input).toHaveValue("Jane Doe");
+    await expect(args.onChangeText).toHaveBeenCalledWith("Jane Doe");
+  },
+};
+
+/** Interaction: the right icon clears the value and fires its handler. */
+export const ClearRightIcon: Story = {
+  args: {
+    label: "Search",
+    value: "Hello",
+    rightIcon: clearIcon,
+    onRightIconPress: fn(),
+  },
+  render: (args) => <ClearableTextInput {...args} />,
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText("Search");
+    await expect(input).toHaveValue("Hello");
+    await userEvent.click(canvas.getByRole("button"));
+    await expect(input).toHaveValue("");
+    await expect(args.onRightIconPress).toHaveBeenCalled();
+  },
+};
+
+/** Interaction: a disabled field cannot be typed into. */
+export const DisabledIsNotEditable: Story = {
+  args: { label: "Full name", value: "", disabled: true },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText("Full name");
+    await expect(input).toBeDisabled();
+    await userEvent.type(input, "nope");
+    await expect(args.onChangeText).not.toHaveBeenCalled();
+  },
+};
+
+/** A11y: an invalid field exposes `aria-invalid` and its error message. */
+export const ErrorIsAccessible: Story = {
+  args: { label: "Email", value: "", error: "Email is required" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText("Email");
+    await expect(input).toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.getByText("Email is required")).toBeInTheDocument();
   },
 };
