@@ -15,6 +15,7 @@ import {
   controlHeight,
   fontSize,
   fontWeight,
+  lineHeight,
   radii,
   space,
   type FontWeight,
@@ -182,4 +183,253 @@ export function resolveTextInputTheme(
     default:
       return base;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Text (atom)
+// ---------------------------------------------------------------------------
+
+export type TextVariant =
+  | "title"
+  | "body"
+  | "caption"
+  | "price"
+  | "priceOriginal"
+  | "label";
+
+export interface TextProps {
+  children: ReactNode;
+  variant?: TextVariant;
+  /** Max lines before truncation (1 = single line ellipsis). */
+  numberOfLines?: number;
+  testID?: string;
+}
+
+export interface TextTheme {
+  fontSize: number;
+  fontWeight: FontWeight;
+  color: string;
+  lineHeight: number;
+}
+
+export function resolveTextTheme(variant: TextVariant = "body"): TextTheme {
+  switch (variant) {
+    case "title":
+      return { fontSize: fontSize.lg, fontWeight: fontWeight.semibold, color: colors.text, lineHeight: lineHeight.lg };
+    case "label":
+      return { fontSize: fontSize.sm, fontWeight: fontWeight.medium, color: colors.text, lineHeight: lineHeight.sm };
+    case "caption":
+      return { fontSize: fontSize.sm, fontWeight: fontWeight.regular, color: colors.textMuted, lineHeight: lineHeight.sm };
+    case "price":
+      return { fontSize: fontSize.lg, fontWeight: fontWeight.bold, color: colors.price, lineHeight: lineHeight.lg };
+    case "priceOriginal":
+      return { fontSize: fontSize.sm, fontWeight: fontWeight.regular, color: colors.textMuted, lineHeight: lineHeight.sm };
+    case "body":
+    default:
+      return { fontSize: fontSize.md, fontWeight: fontWeight.regular, color: colors.text, lineHeight: lineHeight.md };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Card (atom surface)
+// ---------------------------------------------------------------------------
+
+export type CardVariant = "plain" | "outlined" | "elevated";
+
+export interface CardProps {
+  children: ReactNode;
+  variant?: CardVariant;
+  testID?: string;
+}
+
+export interface CardTheme {
+  backgroundColor: string;
+  borderColor: string;
+  borderWidth: number;
+  radius: number;
+  padding: number;
+  hasShadow: boolean;
+}
+
+export function resolveCardTheme(variant: CardVariant = "outlined"): CardTheme {
+  const base = {
+    backgroundColor: colors.surface,
+    radius: radii.lg,
+    padding: space.md,
+  };
+  switch (variant) {
+    case "plain":
+      return { ...base, borderColor: "transparent", borderWidth: 0, hasShadow: false };
+    case "elevated":
+      return { ...base, borderColor: "transparent", borderWidth: 0, hasShadow: true };
+    case "outlined":
+    default:
+      return { ...base, borderColor: colors.border, borderWidth: 1, hasShadow: false };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Badge (atom)
+// ---------------------------------------------------------------------------
+
+export type BadgeVariant = "neutral" | "discount" | "info" | "chip";
+
+export interface BadgeProps {
+  label: string;
+  variant?: BadgeVariant;
+  testID?: string;
+}
+
+export interface BadgeTheme {
+  backgroundColor: string;
+  textColor: string;
+  radius: number;
+  paddingX: number;
+  paddingY: number;
+  fontSize: number;
+  fontWeight: FontWeight;
+}
+
+export function resolveBadgeTheme(variant: BadgeVariant = "neutral"): BadgeTheme {
+  const base = {
+    radius: radii.sm,
+    paddingX: space.sm,
+    paddingY: space.xs,
+    fontSize: fontSize.sm,
+    fontWeight: fontWeight.bold,
+  };
+  switch (variant) {
+    case "discount":
+      return { ...base, backgroundColor: colors.discount, textColor: colors.onPrimary };
+    case "info":
+      return { ...base, backgroundColor: colors.promoBg, textColor: colors.promoText, fontWeight: fontWeight.medium };
+    case "chip":
+      return { ...base, backgroundColor: colors.surface, textColor: colors.text, fontWeight: fontWeight.medium };
+    case "neutral":
+    default:
+      return { ...base, backgroundColor: colors.disabledBg, textColor: colors.textMuted };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Image (atom)
+// ---------------------------------------------------------------------------
+
+export interface ImageProps {
+  source: string;
+  alt?: string;
+  /** width / height. Defaults to 1 (square, like the product thumbnails). */
+  aspectRatio?: number;
+  radius?: number;
+  testID?: string;
+}
+
+export interface ImageTheme {
+  backgroundColor: string;
+  radius: number;
+}
+
+export function resolveImageTheme(): ImageTheme {
+  return { backgroundColor: colors.imageBg, radius: radii.sm };
+}
+
+// ---------------------------------------------------------------------------
+// Rating (atom)
+// ---------------------------------------------------------------------------
+
+export interface RatingProps {
+  value: number;
+  reviewCount?: number;
+  max?: number;
+  testID?: string;
+}
+
+export interface RatingTheme {
+  starColor: string;
+  valueColor: string;
+  textColor: string;
+  fontSize: number;
+}
+
+export function resolveRatingTheme(): RatingTheme {
+  return { starColor: colors.star, valueColor: colors.text, textColor: colors.textMuted, fontSize: fontSize.sm };
+}
+
+// ---------------------------------------------------------------------------
+// Price (atom) + currency formatting
+// ---------------------------------------------------------------------------
+
+export interface PriceProps {
+  price: number;
+  originalPrice?: number;
+  /** Defaults to Math.round((1 - price / originalPrice) * 100) when omitted. */
+  discountPercent?: number;
+  /** e.g. 900000 -> "Rp900 ribu". */
+  abbreviate?: boolean;
+  testID?: string;
+}
+
+export interface PriceTheme {
+  priceColor: string;
+  originalColor: string;
+  priceFontSize: number;
+  originalFontSize: number;
+  fontWeight: FontWeight;
+}
+
+export function resolvePriceTheme(): PriceTheme {
+  return {
+    priceColor: colors.price,
+    originalColor: colors.textMuted,
+    priceFontSize: fontSize.lg,
+    originalFontSize: fontSize.sm,
+    fontWeight: fontWeight.bold,
+  };
+}
+
+/** Places Indonesian "." thousand separators: 2699000 -> "2.699.000". */
+function groupThousands(value: number): string {
+  return Math.round(Math.abs(value)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function abbreviateValue(value: number): string {
+  const trim = (n: number) => String(Math.round(n * 10) / 10).replace(".", ",");
+  if (value >= 1_000_000_000) return `${trim(value / 1_000_000_000)} miliar`;
+  if (value >= 1_000_000) return `${trim(value / 1_000_000)} juta`;
+  if (value >= 1_000) return `${trim(value / 1_000)} ribu`;
+  return groupThousands(value);
+}
+
+export function formatCurrency(
+  amount: number,
+  options: { abbreviate?: boolean; currency?: string } = {},
+): string {
+  const currency = options.currency ?? "Rp";
+  const body = options.abbreviate ? abbreviateValue(amount) : groupThousands(amount);
+  return `${currency}${body}`;
+}
+
+export function resolveDiscountPercent(price: number, originalPrice?: number): number | undefined {
+  if (!originalPrice || originalPrice <= price) return undefined;
+  return Math.round((1 - price / originalPrice) * 100);
+}
+
+// ---------------------------------------------------------------------------
+// ProductCard (molecule) — composes the atoms above.
+// ---------------------------------------------------------------------------
+
+export interface ProductCardProps {
+  imageUrl: string;
+  imageAlt?: string;
+  title: string;
+  /** Corner chip over the image, e.g. "2 Pilihan Isi Set". */
+  badgeLabel?: string;
+  price: number;
+  originalPrice?: number;
+  discountPercent?: number;
+  /** Promo strip text, e.g. "Harga spesial ruparupa rewar…". */
+  promoText?: string;
+  rating?: number;
+  reviewCount?: number;
+  testID?: string;
 }

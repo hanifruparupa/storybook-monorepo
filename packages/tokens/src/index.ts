@@ -20,6 +20,17 @@ export const colors = {
   ghostPressed: "#EEF3FF",
   danger: "#D92D20",
   dangerBorder: "#F97066",
+  /** Product price (orange-red). */
+  price: "#E8590C",
+  /** Discount badge (red). */
+  discount: "#E11D48",
+  /** Rating star (amber). */
+  star: "#F5A623",
+  /** Promo strip background / text. */
+  promoBg: "#E8F0FE",
+  promoText: "#1A56DB",
+  /** Media placeholder background. */
+  imageBg: "#F3F4F6",
 } as const;
 
 export const radii = {
@@ -43,7 +54,14 @@ export const fontSize = {
   lg: 18,
 } as const;
 
+export const lineHeight = {
+  sm: 18,
+  md: 22,
+  lg: 24,
+} as const;
+
 export const fontWeight = {
+  regular: "400",
   medium: "500",
   semibold: "600",
   bold: "700",
