@@ -17,3 +17,5 @@ export type { NativePriceProps } from "./Price/Price";
 export { ProductCard } from "./ProductCard/ProductCard";
 export type { NativeProductCardProps } from "./ProductCard/ProductCard";
 export { useBreakpoint, BreakpointProvider } from "./hooks/useBreakpoint";
+export { Modal } from "./Modal/Modal";
+export type { NativeModalProps } from "./Modal/Modal";
