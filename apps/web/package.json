@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@repo/tokens": "workspace:*",
-    "@repo/ui-web": "workspace:*",
+    "@ruparupa/ui-web": "workspace:*",
     "next": "16.3.8",
     "react": "catalog:",
     "react-dom": "catalog:"

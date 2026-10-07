@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.87.1",
-    "@repo/ui-native": "workspace:*",
+    "@ruparupa/ui-native": "workspace:*",
     "react": "catalog:",
     "react-native": "catalog:",
     "react-native-safe-area-context": "5.8.0"

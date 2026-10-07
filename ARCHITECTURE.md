@@ -41,8 +41,8 @@ Neither app imports the other platform's rendering code.
 ├─ packages/
 │  ├─ tokens/              # @repo/tokens      design tokens (framework-agnostic)
 │  ├─ primitives/          # @repo/primitives  headless props contract + logic
-│  ├─ ui-web/              # @repo/ui-web      React DOM components + Web Storybook
-│  └─ ui-native/           # @repo/ui-native   React Native components + RNW Storybook
+│  ├─ ui-web/              # @ruparupa/ui-web      React DOM components + Web Storybook
+│  └─ ui-native/           # @ruparupa/ui-native   React Native components + RNW Storybook
 ├─ pnpm-workspace.yaml     # workspaces + catalog pins + onlyBuiltDependencies
 ├─ tsconfig.base.json
 ├─ .npmrc                  # node-linker=hoisted (RN requirement)
@@ -58,8 +58,8 @@ Neither app imports the other platform's rendering code.
 | --- | --- | --- | --- |
 | `@repo/tokens` | Raw design values (color, space, radii, type) | No | Logic, JSX, platform imports |
 | `@repo/primitives` | Component prop contracts + pure behaviour/resolvers | No | JSX, `react-dom`, `react-native`, styling output |
-| `@repo/ui-web` | DOM/React implementations of shared components | Yes (DOM) | `react-native`, `react-native-web`, RN primitives |
-| `@repo/ui-native` | React Native implementations of shared components | Yes (RN) | `react-dom`, DOM APIs, `<div>`/`<button>` |
+| `@ruparupa/ui-web` | DOM/React implementations of shared components | Yes (DOM) | `react-native`, `react-native-web`, RN primitives |
+| `@ruparupa/ui-native` | React Native implementations of shared components | Yes (RN) | `react-dom`, DOM APIs, `<div>`/`<button>` |
 | `apps/web` | Website, routes, app-level UI composition | Yes (DOM) | `react-native`, `react-native-web`, any RN component |
 | `apps/mobile` | Mobile app, native projects, `App.tsx` | Yes (RN) | `react-dom`, DOM APIs |
 
@@ -70,8 +70,8 @@ Neither app imports the other platform's rendering code.
 ### 5.1 Allowed dependency edges
 
 ```
-apps/web   ──▶ @repo/ui-web ──▶ @repo/primitives ──▶ @repo/tokens
-apps/mobile ─▶ @repo/ui-native ─▶ @repo/primitives ──▶ @repo/tokens
+apps/web   ──▶ @ruparupa/ui-web ──▶ @repo/primitives ──▶ @repo/tokens
+apps/mobile ─▶ @ruparupa/ui-native ─▶ @repo/primitives ──▶ @repo/tokens
 
 apps/web   ──▶ @repo/tokens            (direct, e.g. CSS variables)
 apps/mobile ─▶ @repo/tokens            (direct, e.g. app-level theming)
@@ -81,13 +81,13 @@ apps/mobile ─▶ @repo/tokens            (direct, e.g. app-level theming)
 - **MUST NOT**: any package import `apps/*`.
 - **MUST NOT**: `apps/*` import another `apps/*`.
 - **MUST NOT**: `@repo/tokens` or `@repo/primitives` import any `@repo/ui-*`.
-- **MUST NOT**: `@repo/ui-web` import `@repo/ui-native`, or vice versa.
+- **MUST NOT**: `@ruparupa/ui-web` import `@ruparupa/ui-native`, or vice versa.
 
 ### 5.2 Platform isolation (hard boundaries)
 
-- **MUST NOT**: `apps/web` or `@repo/ui-web` depend on `react-native` or
+- **MUST NOT**: `apps/web` or `@ruparupa/ui-web` depend on `react-native` or
   `react-native-web` in any form (package.json, imports, config aliases).
-- **MUST NOT**: `@repo/ui-native` import DOM globals (`window`, `document`) or
+- **MUST NOT**: `@ruparupa/ui-native` import DOM globals (`window`, `document`) or
   `react-dom`, except within its Storybook config files.
 - **MUST**: a component that genuinely needs different behaviour per platform
   gets **two implementations** (`ui-web` + `ui-native`), not platform `if` branches
@@ -125,7 +125,7 @@ Otherwise the default split in §5.1 applies.
   `nodeModulesPaths` covering both `apps/mobile/node_modules` and the root
   `node_modules` (see `apps/mobile/metro.config.js`).
 - The native condition (`"react-native": "./src/index.ts"`) **MUST** be present in
-  `@repo/ui-native`'s `exports` so Metro picks the RN entry.
+  `@ruparupa/ui-native`'s `exports` so Metro picks the RN entry.
 
 ---
 
@@ -133,8 +133,8 @@ Otherwise the default split in §5.1 applies.
 
 | Package | Storybook framework | Renders |
 | --- | --- | --- |
-| `@repo/ui-web` | `@storybook/react-vite` | Real DOM in the browser |
-| `@repo/ui-native` | `@storybook/react-native-web-vite` | RN component via `react-native-web` |
+| `@ruparupa/ui-web` | `@storybook/react-vite` | Real DOM in the browser |
+| `@ruparupa/ui-native` | `@storybook/react-native-web-vite` | RN component via `react-native-web` |
 | `apps/storybook` (aggregate) | `@storybook/react-native-web-vite` | Both story sets in one browser UI |
 
 - **MUST**: Storybook is the **contract surface**. Every shared component exposes
@@ -164,7 +164,7 @@ Otherwise the default split in §5.1 applies.
 
 ### New shared component (both platforms)
 1. Add the prop contract + any resolver to `@repo/primitives`.
-2. Implement in `@repo/ui-web/src/<Name>/` **and** `@repo/ui-native/src/<Name>/`.
+2. Implement in `@ruparupa/ui-web/src/<Name>/` **and** `@ruparupa/ui-native/src/<Name>/`.
 3. Add a story to each implementation; export from each `src/index.ts`.
 4. If web needs it, add the package to `apps/web/next.config.mjs` (already covered
    for `ui-web`).
@@ -183,8 +183,8 @@ A change is not done until these pass:
 
 ```
 pnpm typecheck                                  # all workspaces
-pnpm --filter @repo/ui-web build-storybook      # DOM Storybook builds
-pnpm --filter @repo/ui-native build-storybook   # RNW Storybook builds
+pnpm --filter @ruparupa/ui-web build-storybook      # DOM Storybook builds
+pnpm --filter @ruparupa/ui-native build-storybook   # RNW Storybook builds
 pnpm --filter web build                         # Next production build
 pnpm --filter mobile test                       # RN unit tests
 # native sanity (no simulator needed):

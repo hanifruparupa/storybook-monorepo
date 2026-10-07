@@ -46,7 +46,7 @@ molecule. Molecules are **presentational** (see `poc-product-card-and-modal.md`)
 - **Contract-first**: props interface lives in `@repo/primitives`.
 - **Token-driven**: all values come from `@repo/tokens` (no literals).
 - **Cross-platform**: an atom/molecule is implemented once per platform
-  (`@repo/ui-web` DOM, `@repo/ui-native` RN) against the same contract.
+  (`@ruparupa/ui-web` DOM, `@ruparupa/ui-native` RN) against the same contract.
 - **No side effects** in render; handlers via props (`onPress`).
 
 ---

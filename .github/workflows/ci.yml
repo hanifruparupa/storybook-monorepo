@@ -39,11 +39,11 @@ jobs:
       - name: Typecheck (all workspaces)
         run: pnpm typecheck
 
-      - name: Build web Storybook (@repo/ui-web)
-        run: pnpm --filter @repo/ui-web build-storybook
+      - name: Build web Storybook (@ruparupa/ui-web)
+        run: pnpm --filter @ruparupa/ui-web build-storybook
 
-      - name: Build native Storybook preview (@repo/ui-native)
-        run: pnpm --filter @repo/ui-native build-storybook
+      - name: Build native Storybook preview (@ruparupa/ui-native)
+        run: pnpm --filter @ruparupa/ui-native build-storybook
 
       - name: Build aggregate Storybook (apps/storybook)
         run: pnpm --filter storybook build-storybook

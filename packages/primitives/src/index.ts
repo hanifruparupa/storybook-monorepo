@@ -3,7 +3,7 @@
  *
  * This package owns the *contract* and the *behaviour* of our components
  * (prop shapes, variant/size resolution, state), but renders nothing. Each
- * platform package (`@repo/ui-native`, `@repo/ui-web`) turns the resolved
+ * platform package (`@ruparupa/ui-native`, `@ruparupa/ui-web`) turns the resolved
  * theme into its own primitives. That is the seam that lets the web team own
  * DOM/Tailwind while mobile owns React Native — without forking the API.
  */

@@ -2,7 +2,7 @@
  * @repo/tokens — framework-agnostic design tokens.
  *
  * These are plain JS values, so BOTH the React Native implementation
- * (`@repo/ui-native`) and the DOM implementation (`@repo/ui-web`) can consume
+ * (`@ruparupa/ui-native`) and the DOM implementation (`@ruparupa/ui-web`) can consume
  * the exact same source of truth. Swap this file for a generated export from
  * Figma/Tokens Studio later without touching any consumer.
  */

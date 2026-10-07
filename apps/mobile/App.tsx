@@ -1,5 +1,5 @@
 /**
- * Demo screen showcasing shared native components from @repo/ui-native.
+ * Demo screen showcasing shared native components from @ruparupa/ui-native.
  *
  * @format
  */
@@ -13,7 +13,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Button, TextInput } from '@repo/ui-native';
+import { Button, TextInput } from '@ruparupa/ui-native';
 
 function App() {
   const [name, setName] = useState('');
@@ -30,7 +30,7 @@ function App() {
           contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Text style={styles.title}>React Native — @repo/ui-native</Text>
+            <Text style={styles.title}>React Native — @ruparupa/ui-native</Text>
             <Text style={styles.subtitle}>
               Shared tokens + contracts with the web app, rendered natively.
             </Text>

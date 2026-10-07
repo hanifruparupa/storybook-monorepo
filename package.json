@@ -9,14 +9,19 @@
   "scripts": {
     "web": "pnpm --filter web dev",
     "mobile": "pnpm --filter mobile start",
-    "storybook:web": "pnpm --filter @repo/ui-web storybook",
-    "storybook:rn-web": "pnpm --filter @repo/ui-native storybook",
+    "storybook:web": "pnpm --filter @ruparupa/ui-web storybook",
+    "storybook:rn-web": "pnpm --filter @ruparupa/ui-native storybook",
     "storybook:all": "pnpm --filter storybook storybook",
     "build-storybook:all": "pnpm --filter storybook build-storybook",
     "typecheck": "pnpm -r --if-present typecheck",
-    "test": "pnpm -r --if-present test"
+    "test": "pnpm -r --if-present test",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "build:publish": "pnpm --filter @ruparupa/ui-web build && pnpm --filter @ruparupa/ui-native build",
+    "release": "pnpm build:publish && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.0",
     "typescript": "catalog:"
   },
   "pnpm": {

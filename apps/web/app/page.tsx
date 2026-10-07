@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, TextInput } from "@repo/ui-web";
+import { Button, TextInput } from "@ruparupa/ui-web";
 
 function UserIcon() {
   return (
@@ -94,7 +94,7 @@ export default function Home() {
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <h1 style={{ fontSize: 22, lineHeight: 1.3, margin: 0 }}>
-            Next.js (web) — @repo/ui-web
+            Next.js (web) — @ruparupa/ui-web
           </h1>
           <p
             style={{

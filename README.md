@@ -17,7 +17,7 @@ A pnpm workspace monorepo with a **Next.js website** and a **React Native app** 
                          └───┬────────────┬───┘
                              │            │
              ┌───────────────▼──┐      ┌──▼────────────────┐
-             │  @repo/ui-web    │      │  @repo/ui-native  │
+             │  @ruparupa/ui-web    │      │  @ruparupa/ui-native  │
              │  React DOM (web) │      │  React Native     │
              └────────┬─────────┘      └─────────┬─────────┘
                       │                          │
@@ -25,8 +25,8 @@ A pnpm workspace monorepo with a **Next.js website** and a **React Native app** 
               (Next.js, DOM)          (bare RN, Metro)
 ```
 
-- **Web team** writes DOM/React in `@repo/ui-web` (the example uses inline styles; Tailwind/CSS Modules can be adopted freely). They do **not** use React Native.
-- **Mobile team** writes React Native in `@repo/ui-native`.
+- **Web team** writes DOM/React in `@ruparupa/ui-web` (the example uses inline styles; Tailwind/CSS Modules can be adopted freely). They do **not** use React Native.
+- **Mobile team** writes React Native in `@ruparupa/ui-native`.
 - Both import the **same** props contract and theme resolver from `@repo/primitives`, and the same values from `@repo/tokens`. That is the seam that keeps them visually and behaviorally consistent without forcing one platform's POV on the other.
 
 > Because the seam is `tokens` + `primitives`, `apps/web` carries **no** `react-native`/`react-native-web` at all — see `apps/web/next.config.mjs`.
@@ -37,11 +37,11 @@ A pnpm workspace monorepo with a **Next.js website** and a **React Native app** 
 packages/
 ├─ tokens/       # @repo/tokens      — framework-agnostic design tokens
 ├─ primitives/   # @repo/primitives  — headless props contract + theme logic
-├─ ui-web/       # @repo/ui-web      — React DOM components + web Storybook
-└─ ui-native/    # @repo/ui-native   — React Native components + RNW Storybook preview
+├─ ui-web/       # @ruparupa/ui-web      — React DOM components + web Storybook
+└─ ui-native/    # @ruparupa/ui-native   — React Native components + RNW Storybook preview
 apps/
-├─ web/          # Next.js 16 (App Router) — consumes @repo/ui-web
-├─ mobile/       # React Native 0.87 (bare CLI) — consumes @repo/ui-native
+├─ web/          # Next.js 16 (App Router) — consumes @ruparupa/ui-web
+├─ mobile/       # React Native 0.87 (bare CLI) — consumes @ruparupa/ui-native
 └─ storybook/    # aggregate Storybook portal (both story sets, one URL)
 ```
 
@@ -74,8 +74,8 @@ pnpm storybook:web      # Web Storybook (React DOM)     → http://localhost:600
 pnpm storybook:rn-web   # RN component preview on web   → http://localhost:6007
 ```
 
-- `@repo/ui-web` → `@storybook/react-vite` (real DOM).
-- `@repo/ui-native` → `@storybook/react-native-web-vite` (RN rendered via react-native-web).
+- `@ruparupa/ui-web` → `@storybook/react-vite` (real DOM).
+- `@ruparupa/ui-native` → `@storybook/react-native-web-vite` (RN rendered via react-native-web).
 - `apps/storybook` → aggregate portal; reads both packages' stories into one URL.
 - Storybook is **browser-only** — there is no on-device Storybook.
 - The aggregate portal is deployed to GitHub Pages on every push to `main`: <https://hanifruparupa.github.io/storybook-monorepo/>
@@ -84,7 +84,7 @@ pnpm storybook:rn-web   # RN component preview on web   → http://localhost:600
 
 Both packages implement the same contracts from `@repo/primitives`:
 
-| Component | Web (`@repo/ui-web`) | Native (`@repo/ui-native`) | Features |
+| Component | Web (`@ruparupa/ui-web`) | Native (`@ruparupa/ui-native`) | Features |
 |---|---|---|---|
 | `Button` | DOM `<button>` | RN `Pressable` | variants `primary\|secondary\|ghost`, sizes `sm\|md\|lg`, disabled, fullWidth |
 | `TextInput` | DOM `<input>` | RN `TextInput` | label, placeholder, left/right icon slots, focused/blur/disabled/error states |
@@ -101,8 +101,8 @@ Each component ships stories under `Web/*` and `Native/*`, aggregated by `apps/s
 ## Adding a component
 
 1. Define its props contract + any shared logic in `@repo/primitives` (e.g. `TextInputProps`, `resolveTextInputTheme`).
-2. Implement it for web in `@repo/ui-web/src/<Name>/<Name>.tsx` with a sibling `<Name>.stories.tsx`.
-3. Implement it for native in `@repo/ui-native/src/<Name>/<Name>.tsx` with a sibling `<Name>.stories.tsx`.
+2. Implement it for web in `@ruparupa/ui-web/src/<Name>/<Name>.tsx` with a sibling `<Name>.stories.tsx`.
+3. Implement it for native in `@ruparupa/ui-native/src/<Name>/<Name>.tsx` with a sibling `<Name>.stories.tsx`.
 4. Export from each package's `src/index.ts`.
 
 If a component must be **byte-for-byte identical** across platforms and is simple enough, you can still implement it once with React Native primitives and render it on web through `react-native-web` — but that is opt-in, not the default.
@@ -112,7 +112,7 @@ If a component must be **byte-for-byte identical** across platforms and is simpl
 ```bash
 pnpm typecheck                                  # tsc --noEmit across all workspaces
 pnpm build-storybook:all                        # static aggregate Storybook
-pnpm --filter @repo/ui-web build-storybook      # static web Storybook
+pnpm --filter @ruparupa/ui-web build-storybook      # static web Storybook
 pnpm --filter web build                         # Next production build
 ```
 

@@ -76,7 +76,7 @@ interface ModalProps {
 
 ### B.3 Platform behavior
 
-| Concern | Web (`@repo/ui-web`) | Native (`@repo/ui-native`) |
+| Concern | Web (`@ruparupa/ui-web`) | Native (`@ruparupa/ui-native`) |
 |---|---|---|
 | Container | fixed overlay `<div>` + focus trap | RN `Modal` / absolute overlay |
 | Enter/exit | CSS `transition`/`opacity` + `transform` | `Animated` / Reanimated timing |

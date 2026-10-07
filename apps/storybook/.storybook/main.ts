@@ -5,8 +5,8 @@ import type { StorybookConfig } from "@storybook/react-native-web-vite";
  *
  * It owns NO components. It only reads stories from the two platform packages
  * and renders them side by side in one browser UI:
- *   - @repo/ui-web    -> plain DOM components (Web/…)
- *   - @repo/ui-native -> React Native components, rendered via react-native-web
+ *   - @ruparupa/ui-web    -> plain DOM components (Web/…)
+ *   - @ruparupa/ui-native -> React Native components, rendered via react-native-web
  *
  * The `@storybook/react-native-web-vite` framework aliases `react-native` to
  * `react-native-web`, so the RN stories render in the browser here too. There

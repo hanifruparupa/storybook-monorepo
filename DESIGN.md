@@ -25,7 +25,7 @@
 - **MUST**: consume colours, spacing, radii, font sizes/weights, and control
   heights from `@repo/tokens` (`packages/tokens/src/index.ts`).
 - **MUST NOT**: write raw hex colours, px spacing, radii, or font sizes inside
-  `@repo/ui-web` or `@repo/ui-native` components.
+  `@ruparupa/ui-web` or `@ruparupa/ui-native` components.
 - **SHOULD**: when a needed value is missing, add it to `@repo/tokens` — do not
   inline it. Tokens are additive and reviewed.
 
@@ -76,14 +76,14 @@ Defined in `packages/tokens/src/index.ts`:
 
 ## 5. Per-platform implementation rules
 
-### 5.1 Web — `@repo/ui-web`
+### 5.1 Web — `@ruparupa/ui-web`
 - **MUST**: build on semantic DOM elements (`<button>`, `<input>`, `<label>`…).
 - **MUST**: rely on native semantics for a11y instead of faking roles.
 - **MAY**: style with CSS Modules / Tailwind / inline styles, **as long as** all
   values trace back to `@repo/tokens`.
 - **MUST NOT**: import `react-native` / `react-native-web` / RN primitives.
 
-### 5.2 Native — `@repo/ui-native`
+### 5.2 Native — `@ruparupa/ui-native`
 - **MUST**: build on React Native primitives (`View`, `Text`, `Pressable`,
   `TextInput`, `StyleSheet`).
 - **MUST**: set `accessibilityRole`, `accessibilityLabel`, and
@@ -162,8 +162,8 @@ Defined in `packages/tokens/src/index.ts`:
 ## 10. New component checklist
 
 - [ ] Props interface added to `@repo/primitives` (+ resolver if stateful).
-- [ ] Web implementation in `@repo/ui-web/src/<Name>/<Name>.tsx`, DOM + a11y.
-- [ ] Native implementation in `@repo/ui-native/src/<Name>/<Name>.tsx`, RN + a11y.
+- [ ] Web implementation in `@ruparupa/ui-web/src/<Name>/<Name>.tsx`, DOM + a11y.
+- [ ] Native implementation in `@ruparupa/ui-native/src/<Name>/<Name>.tsx`, RN + a11y.
 - [ ] Stories for both, covering all variants/sizes/states, with controls.
 - [ ] Exported from each package's `src/index.ts`.
 - [ ] All values derived from `@repo/tokens`.
@@ -171,7 +171,7 @@ Defined in `packages/tokens/src/index.ts`:
 
 > Reference implementations to copy: atoms (`Text`, `Image`, `Card`, `Badge`, `Rating`,
 > `Price`), the `ProductCard` molecule, and `Button`/`TextInput` (contract + resolver in
-> `@repo/primitives`; DOM in `@repo/ui-web`; RN in `@repo/ui-native`; stories in both).
+> `@repo/primitives`; DOM in `@ruparupa/ui-web`; RN in `@ruparupa/ui-native`; stories in both).
 
 ---
 

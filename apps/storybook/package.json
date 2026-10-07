@@ -13,8 +13,8 @@
   "dependencies": {
     "@repo/primitives": "workspace:*",
     "@repo/tokens": "workspace:*",
-    "@repo/ui-native": "workspace:*",
-    "@repo/ui-web": "workspace:*"
+    "@ruparupa/ui-native": "workspace:*",
+    "@ruparupa/ui-web": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "10.6.1",

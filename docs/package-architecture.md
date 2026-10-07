@@ -13,8 +13,8 @@ The monorepo currently **separates** the shared layer from the platform layers:
 ```
 @repo/tokens      (values)      ── framework-agnostic
 @repo/primitives  (contracts)   ── headless
-@repo/ui-web      (DOM)         ── React DOM
-@repo/ui-native   (RN)          ── React Native
+@ruparupa/ui-web      (DOM)         ── React DOM
+@ruparupa/ui-native   (RN)          ── React Native
 apps/web, apps/mobile           ── consumers
 ```
 
@@ -30,7 +30,7 @@ One package (e.g. `@repo/ui`) where components are written once with React Nativ
 primitives and rendered on web via `react-native-web`.
 
 ### Option B — Separate packages (current)
-`@repo/ui-web` (DOM) and `@repo/ui-native` (RN) share only `tokens` + `primitives`.
+`@ruparupa/ui-web` (DOM) and `@ruparupa/ui-native` (RN) share only `tokens` + `primitives`.
 
 ### Option C — Hybrid
 Atoms that must be byte-for-byte identical live in one universal package; the rest are

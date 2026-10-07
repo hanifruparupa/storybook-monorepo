@@ -1,12 +1,13 @@
 {
-  "name": "@repo/ui-native",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@ruparupa/ui-native",
+  "version": "0.1.0",
   "type": "module",
   "sideEffects": false,
+  "license": "MIT",
+  "description": "React Native components for the Ruparupa design system (shared contracts with @ruparupa/ui-web).",
+  "files": ["dist"],
   "main": "./src/index.ts",
   "types": "./src/index.ts",
-  "react-native": "./src/index.ts",
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -15,19 +16,33 @@
     }
   },
   "scripts": {
+    "build": "tsup",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6007",
-    "build-storybook": "storybook build"
-  },
-  "dependencies": {
-    "@repo/primitives": "workspace:*",
-    "@repo/tokens": "workspace:*"
+    "build-storybook": "storybook build",
+    "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
+    "react": ">=18",
+    "react-native": ">=0.72"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "react-native": "./dist/index.js",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      }
+    }
   },
   "devDependencies": {
+    "@repo/primitives": "workspace:*",
+    "@repo/tokens": "workspace:*",
     "@storybook/addon-a11y": "10.6.1",
     "@storybook/addon-docs": "10.6.1",
     "@storybook/react": "10.6.1",
@@ -38,6 +53,7 @@
     "react-native": "catalog:",
     "react-native-web": "catalog:",
     "storybook": "10.6.1",
+    "tsup": "^8.3.0",
     "typescript": "catalog:",
     "vite": "^7.0.0"
   }
