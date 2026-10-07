@@ -35,6 +35,8 @@ export const colors = {
   cashbackBg: "#FFD400",
   cashbackText: "#161616",
   cashbackLabel: "#4B5563",
+  /** Modal backdrop. */
+  overlay: "rgba(11, 18, 32, 0.5)",
 } as const;
 
 export const radii = {
@@ -101,6 +103,16 @@ export type Breakpoint = keyof typeof breakpoints;
 
 /** Ascending breakpoint order (base → largest). */
 export const breakpointOrder = ["xs", "sm", "md", "lg", "xl", "xxl"] as const;
+
+/** Motion durations in milliseconds (shared by web transitions and RN Animated). */
+export const motion = {
+  fast: 150,
+  base: 250,
+  slow: 400,
+} as const;
+
+/** Shared easing curve (CSS cubic-bezier; RN: Easing.bezier(0.2, 0, 0, 1)). */
+export const motionEasing = "cubic-bezier(0.2, 0, 0, 1)";
 
 export type ColorToken = keyof typeof colors;
 export type SpaceToken = keyof typeof space;

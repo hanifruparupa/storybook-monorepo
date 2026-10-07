@@ -18,6 +18,7 @@ import {
   fontSize,
   fontWeight,
   lineHeight,
+  motion,
   radii,
   space,
   type Breakpoint,
@@ -536,4 +537,42 @@ export function resolveButtonSize(
 ): ButtonSize {
   if (typeof size === "string") return size;
   return resolveResponsiveValue(size, breakpoint, fallback);
+}
+
+// ---------------------------------------------------------------------------
+// Modal (organism)
+// ---------------------------------------------------------------------------
+
+export type ModalPlacement = "center" | "bottom-sheet";
+
+export interface ModalProps {
+  visible: boolean;
+  onRequestClose?: () => void;
+  title?: string;
+  children: ReactNode;
+  placement?: ModalPlacement;
+  /** Defaults to true. */
+  dismissOnBackdropPress?: boolean;
+  testID?: string;
+}
+
+export interface ModalTheme {
+  backdropColor: string;
+  surfaceColor: string;
+  radius: number;
+  padding: number;
+  maxWidth: number;
+  /** Enter/exit duration in ms (from the `motion` tokens). */
+  duration: number;
+}
+
+export function resolveModalTheme(placement: ModalPlacement = "center"): ModalTheme {
+  return {
+    backdropColor: colors.overlay,
+    surfaceColor: colors.surface,
+    radius: radii.lg,
+    padding: space.lg,
+    maxWidth: 480,
+    duration: motion.base,
+  };
 }
