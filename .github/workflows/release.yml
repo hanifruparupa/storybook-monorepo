@@ -1,9 +1,14 @@
 name: Release
 
+# Publishing needs npm auth for the @ruparupa scope. Two options:
+#  1. Add repo secret NPM_TOKEN (npm Automation/Granular token with publish access).
+#  2. Configure npm Trusted Publishing for these packages, then OIDC works.
+# Until then this workflow is manual-only. After adding NPM_TOKEN, restore the
+# `push: branches: [main]` trigger below so releases run automatically.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+  # push:
+  #   branches: [main]
 
 concurrency:
   group: release-${{ github.ref }}
