@@ -23,3 +23,5 @@ export { IconButton } from "./IconButton/IconButton";
 export type { WebIconButtonProps } from "./IconButton/IconButton";
 export { CardHeader, CardContent, CardFooter } from "./Card/CardSections";
 export type { WebCardSectionProps } from "./Card/CardSections";
+export { CardImage, CardTitle } from "./Card/CardSections";
+export type { WebCardImageProps, WebCardTitleProps } from "./Card/CardSections";

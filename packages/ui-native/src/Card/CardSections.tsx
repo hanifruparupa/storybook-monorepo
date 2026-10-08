@@ -1,6 +1,8 @@
-import { View, type StyleProp, type ViewStyle } from "react-native";
-import type { CardSectionProps } from "@repo/primitives";
+import { View, type StyleProp, type TextStyle, type ViewStyle } from "react-native";
+import type { CardImageProps, CardSectionProps, CardTitleProps } from "@repo/primitives";
 import { resolveCardSectionTheme } from "@repo/primitives";
+import { Image } from "../Image/Image";
+import { Text } from "../Text/Text";
 
 export interface NativeCardSectionProps extends CardSectionProps {
   style?: StyleProp<ViewStyle>;
@@ -72,5 +74,44 @@ export function CardFooter({ children, flush = false, testID, style }: NativeCar
     >
       {children}
     </View>
+  );
+}
+
+export interface NativeCardImageProps extends CardImageProps {
+  style?: StyleProp<ViewStyle>;
+}
+
+export function CardImage({
+  source,
+  alt,
+  aspectRatio,
+  radius,
+  children,
+  testID,
+  style,
+}: NativeCardImageProps) {
+  return (
+    <View testID={testID} style={[{ position: "relative", width: "100%" }, style]}>
+      <Image source={source} alt={alt} aspectRatio={aspectRatio ?? 1} radius={radius ?? 0} />
+      {children}
+    </View>
+  );
+}
+
+export interface NativeCardTitleProps extends CardTitleProps {
+  style?: StyleProp<TextStyle>;
+}
+
+export function CardTitle({
+  children,
+  variant,
+  numberOfLines,
+  testID,
+  style,
+}: NativeCardTitleProps) {
+  return (
+    <Text variant={variant ?? "title"} numberOfLines={numberOfLines} testID={testID} style={style}>
+      {children}
+    </Text>
   );
 }

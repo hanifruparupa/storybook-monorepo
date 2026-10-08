@@ -3,7 +3,6 @@ import type { ProductCardProps } from "@repo/primitives";
 import { formatCurrency, resolveCashbackTheme } from "@repo/primitives";
 import { colors, space, radii } from "@repo/tokens";
 import { Text } from "../Text/Text";
-import { Image } from "../Image/Image";
 import { Card } from "../Card/Card";
 import { Badge } from "../Badge/Badge";
 import { Rating } from "../Rating/Rating";
@@ -40,8 +39,7 @@ export function ProductCard({
       style={style}
     >
       <Card variant="plain" style={{ padding: 0, overflow: "hidden", width: "100%" }}>
-        <View style={styles.media}>
-          <Image source={imageUrl} alt={imageAlt} aspectRatio={1} radius={0} />
+        <Card.Image source={imageUrl} alt={imageAlt} aspectRatio={1}>
           {badgeLabel ? (
             <View style={cashback ? styles.badgeOverlayTop : styles.badgeOverlay}>
               <Badge variant="chip" label={badgeLabel} />
@@ -90,11 +88,11 @@ export function ProductCard({
               ) : null}
             </View>
           ) : null}
-        </View>
-        <View style={styles.body}>
-          <Text variant="body" numberOfLines={2}>
+        </Card.Image>
+        <Card.Content style={{ gap: space.sm }}>
+          <Card.Title variant="body" numberOfLines={2}>
             {title}
-          </Text>
+          </Card.Title>
           <Price price={price} originalPrice={originalPrice} discountPercent={discountPercent} />
           {promoText ? (
             <View style={styles.promo}>
@@ -107,16 +105,13 @@ export function ProductCard({
             </View>
           ) : null}
           {typeof rating === "number" ? <Rating value={rating} reviewCount={reviewCount} /> : null}
-        </View>
+        </Card.Content>
       </Card>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  media: {
-    position: "relative",
-  },
   badgeOverlay: {
     position: "absolute",
     left: space.sm,
@@ -137,10 +132,6 @@ const styles = StyleSheet.create({
     gap: space.xs,
     paddingHorizontal: space.sm,
     paddingVertical: space.xs,
-  },
-  body: {
-    padding: space.md,
-    gap: space.sm,
   },
   promo: {
     flexDirection: "row",

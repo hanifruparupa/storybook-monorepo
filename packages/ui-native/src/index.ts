@@ -10,6 +10,8 @@ export { Card } from "./Card/Card";
 export type { NativeCardProps } from "./Card/Card";
 export { CardHeader, CardContent, CardFooter } from "./Card/CardSections";
 export type { NativeCardSectionProps } from "./Card/CardSections";
+export { CardImage, CardTitle } from "./Card/CardSections";
+export type { NativeCardImageProps, NativeCardTitleProps } from "./Card/CardSections";
 export { Badge } from "./Badge/Badge";
 export type { NativeBadgeProps } from "./Badge/Badge";
 export { Rating } from "./Rating/Rating";

@@ -4,7 +4,6 @@ import type { ProductCardProps } from "@repo/primitives";
 import { formatCurrency, resolveCashbackTheme } from "@repo/primitives";
 import { colors, radii, space } from "@repo/tokens";
 import { Text } from "../Text/Text";
-import { Image } from "../Image/Image";
 import { Card } from "../Card/Card";
 import { Badge } from "../Badge/Badge";
 import { Rating } from "../Rating/Rating";
@@ -45,8 +44,7 @@ export function ProductCard({
 
   const content = (
     <>
-      <div style={{ position: "relative" }}>
-        <Image source={imageUrl} alt={imageAlt} aspectRatio={1} radius={0} />
+      <Card.Image source={imageUrl} alt={imageAlt} aspectRatio={1}>
         {badgeLabel !== undefined && badgeLabel !== "" ? (
           <Badge
             variant="chip"
@@ -123,19 +121,18 @@ export function ProductCard({
             ) : null}
           </div>
         ) : null}
-      </div>
+      </Card.Image>
 
-      <div
+      <Card.Content
         style={{
-          padding: space.md,
           display: "flex",
           flexDirection: "column",
           gap: space.sm,
         }}
       >
-        <Text variant="body" numberOfLines={2}>
+        <Card.Title variant="body" numberOfLines={2}>
           {title}
-        </Text>
+        </Card.Title>
 
         <Price
           price={price}
@@ -175,7 +172,7 @@ export function ProductCard({
         {rating !== undefined ? (
           <Rating value={rating} reviewCount={reviewCount} />
         ) : null}
-      </div>
+      </Card.Content>
     </>
   );
 

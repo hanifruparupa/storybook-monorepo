@@ -49,3 +49,14 @@ export const HeaderOnly: Story = {
 export const FlushContent: Story = {
   render: (args) => (<Card {...args}><Card.Content flush><Text variant="body">Flush content (no padding)</Text></Card.Content></Card>),
 };
+export const MediaAndTitle: Story = {
+  render: (args) => (
+    <Card {...args}>
+      <Card.Image source="https://picsum.photos/seed/card/600/600" alt="Card media" />
+      <Card.Content>
+        <Card.Title>Card title</Card.Title>
+        <Text variant="body">Card body content.</Text>
+      </Card.Content>
+    </Card>
+  ),
+};

@@ -1,6 +1,12 @@
 import * as React from "react";
-import type { CardSectionProps } from "@repo/primitives";
+import type {
+  CardImageProps,
+  CardSectionProps,
+  CardTitleProps,
+} from "@repo/primitives";
 import { resolveCardSectionTheme } from "@repo/primitives";
+import { Image } from "../Image/Image";
+import { Text } from "../Text/Text";
 
 export interface WebCardSectionProps extends CardSectionProps {
   style?: React.CSSProperties;
@@ -88,5 +94,65 @@ export function CardFooter({
     <footer className={className} style={sectionStyle} data-testid={testID}>
       {children}
     </footer>
+  );
+}
+
+export interface WebCardImageProps extends CardImageProps {
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+export interface WebCardTitleProps extends CardTitleProps {
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+export function CardImage({
+  source,
+  alt,
+  aspectRatio,
+  radius,
+  children,
+  testID,
+  style,
+  className,
+}: WebCardImageProps): React.JSX.Element {
+  const wrapperStyle: React.CSSProperties = {
+    position: "relative",
+    width: "100%",
+    ...style,
+  };
+
+  return (
+    <div className={className} style={wrapperStyle} data-testid={testID}>
+      <Image
+        source={source}
+        alt={alt}
+        aspectRatio={aspectRatio ?? 1}
+        radius={radius ?? 0}
+      />
+      {children}
+    </div>
+  );
+}
+
+export function CardTitle({
+  children,
+  variant,
+  numberOfLines,
+  testID,
+  style,
+  className,
+}: WebCardTitleProps): React.JSX.Element {
+  return (
+    <Text
+      variant={variant ?? "title"}
+      numberOfLines={numberOfLines}
+      testID={testID}
+      className={className}
+      style={style}
+    >
+      {children}
+    </Text>
   );
 }
