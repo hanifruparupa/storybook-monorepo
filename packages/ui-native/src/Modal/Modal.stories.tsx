@@ -22,7 +22,7 @@ function ModalDemo(props: Omit<NativeModalProps, "visible">) {
 }
 
 const meta = {
-  title: "Native/Modal",
+  title: "Native/Organisms/Modal",
   component: Modal,
   args: {
     visible: true,
@@ -31,6 +31,8 @@ const meta = {
     onRequestClose: fn(),
   },
   parameters: {
+    atomicLevel: "organism",
+    dependsOn: ["Text", "Button"],
     // react-native-web's Modal always renders `aria-modal="true"` but only sets
     // `role="dialog"` once its internal animation reports "active"; axe flags that
     // unsupported combination. Scoped to this component only (RN on-device is fine).

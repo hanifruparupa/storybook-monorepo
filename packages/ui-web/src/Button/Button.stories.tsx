@@ -3,8 +3,12 @@ import { expect, fn, userEvent, within } from "storybook/test";
 import { Button } from "./Button";
 
 const meta = {
-  title: "Web/Button",
+  title: "Web/Atoms/Button",
   component: Button,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     label: "Button",
     onPress: fn(),

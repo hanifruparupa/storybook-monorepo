@@ -18,8 +18,12 @@ const plusIcon = (
 );
 
 const meta = {
-  title: "Web/IconButton",
+  title: "Web/Atoms/IconButton",
   component: IconButton,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     icon: plusIcon,
     accessibilityLabel: "Add to cart",

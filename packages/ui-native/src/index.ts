@@ -12,6 +12,8 @@ export { CardHeader, CardContent, CardFooter } from "./Card/CardSections";
 export type { NativeCardSectionProps } from "./Card/CardSections";
 export { CardImage, CardTitle } from "./Card/CardSections";
 export type { NativeCardImageProps, NativeCardTitleProps } from "./Card/CardSections";
+export { CardMedia, CardActions } from "./Card/CardSections";
+export type { NativeCardMediaProps, NativeCardActionsProps } from "./Card/CardSections";
 export { Badge } from "./Badge/Badge";
 export type { NativeBadgeProps } from "./Badge/Badge";
 export { Rating } from "./Rating/Rating";

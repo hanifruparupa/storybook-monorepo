@@ -1,6 +1,13 @@
 import { View, type StyleProp, type TextStyle, type ViewStyle } from "react-native";
-import type { CardImageProps, CardSectionProps, CardTitleProps } from "@repo/primitives";
+import type {
+  CardActionsProps,
+  CardImageProps,
+  CardMediaProps,
+  CardSectionProps,
+  CardTitleProps,
+} from "@repo/primitives";
 import { resolveCardSectionTheme } from "@repo/primitives";
+import { space } from "@repo/tokens";
 import { Image } from "../Image/Image";
 import { Text } from "../Text/Text";
 
@@ -113,5 +120,71 @@ export function CardTitle({
     <Text variant={variant ?? "title"} numberOfLines={numberOfLines} testID={testID} style={style}>
       {children}
     </Text>
+  );
+}
+
+export interface NativeCardMediaProps extends CardMediaProps {
+  style?: StyleProp<ViewStyle>;
+}
+
+export function CardMedia({ children, testID, style }: NativeCardMediaProps) {
+  const t = resolveCardSectionTheme("media");
+  return (
+    <View
+      testID={testID}
+      style={[
+        {
+          padding: t.padding,
+          ...(t.borderEdge === "bottom"
+            ? { borderBottomWidth: t.borderWidth, borderColor: t.borderColor }
+            : null),
+          ...(t.borderEdge === "top"
+            ? { borderTopWidth: t.borderWidth, borderColor: t.borderColor }
+            : null),
+        },
+        style,
+      ]}
+    >
+      {children}
+    </View>
+  );
+}
+
+export interface NativeCardActionsProps extends CardActionsProps {
+  style?: StyleProp<ViewStyle>;
+}
+
+export function CardActions({ children, align = "end", testID, style }: NativeCardActionsProps) {
+  const t = resolveCardSectionTheme("actions");
+  const justifyContent =
+    align === "start"
+      ? "flex-start"
+      : align === "center"
+        ? "center"
+        : align === "between"
+          ? "space-between"
+          : "flex-end";
+  return (
+    <View
+      testID={testID}
+      style={[
+        {
+          padding: t.padding,
+          ...(t.borderEdge === "bottom"
+            ? { borderBottomWidth: t.borderWidth, borderColor: t.borderColor }
+            : null),
+          ...(t.borderEdge === "top"
+            ? { borderTopWidth: t.borderWidth, borderColor: t.borderColor }
+            : null),
+          flexDirection: "row",
+          alignItems: "center",
+          gap: space.sm,
+          justifyContent,
+        },
+        style,
+      ]}
+    >
+      {children}
+    </View>
   );
 }

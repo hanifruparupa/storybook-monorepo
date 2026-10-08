@@ -4,11 +4,12 @@ import { Card } from "./Card";
 import { Text } from "../Text/Text";
 
 const meta = {
-  title: "Native/Card",
+  title: "Native/Atoms/Card",
   component: Card,
   args: {
     children: <Text>Card content</Text>,
   },
+  parameters: { atomicLevel: "atom", dependsOn: ["Text", "Image"] },
   decorators: [
     (Story) => (
       <View style={{ padding: 16, alignItems: "flex-start", gap: 12 }}>
@@ -59,4 +60,10 @@ export const MediaAndTitle: Story = {
       </Card.Content>
     </Card>
   ),
+};
+export const WithMedia: Story = {
+  render: (args) => (<Card {...args}><Card.Media><Text variant="body">Custom media slot</Text></Card.Media></Card>),
+};
+export const WithActions: Story = {
+  render: (args) => (<Card {...args}><Card.Content><Text variant="body">Body</Text></Card.Content><Card.Actions><Text variant="label">Cancel</Text><Text variant="label">Save</Text></Card.Actions></Card>),
 };

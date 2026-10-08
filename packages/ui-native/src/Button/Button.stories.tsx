@@ -4,8 +4,12 @@ import { Text, View } from "react-native";
 import { Button } from "./Button";
 
 const meta = {
-  title: "Native/Button",
+  title: "Native/Atoms/Button",
   component: Button,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     label: "Button",
     onPress: fn(),

@@ -2,8 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Price } from "./Price";
 
 const meta = {
-  title: "Web/Price",
+  title: "Web/Atoms/Price",
   component: Price,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: ["Badge"],
+  },
   args: {
     price: 2699000,
     originalPrice: 3599000,

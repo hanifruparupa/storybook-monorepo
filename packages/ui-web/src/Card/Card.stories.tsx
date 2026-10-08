@@ -3,7 +3,7 @@ import { Card } from "./Card";
 import { Text } from "../Text/Text";
 
 const meta = {
-  title: "Web/Card",
+  title: "Web/Atoms/Card",
   component: Card,
   args: {
     children: "Card content goes here",
@@ -15,6 +15,7 @@ const meta = {
       options: ["plain", "outlined", "elevated"],
     },
   },
+  parameters: { atomicLevel: "atom", dependsOn: ["Text", "Image"] },
 } satisfies Meta<typeof Card>;
 
 export default meta;
@@ -63,4 +64,10 @@ export const MediaAndTitle: Story = {
       </Card.Content>
     </Card>
   ),
+};
+export const WithMedia: Story = {
+  render: (args) => (<Card {...args}><Card.Media><Text variant="body">Custom media slot</Text></Card.Media></Card>),
+};
+export const WithActions: Story = {
+  render: (args) => (<Card {...args}><Card.Content><Text variant="body">Body</Text></Card.Content><Card.Actions><Text variant="label">Cancel</Text><Text variant="label">Save</Text></Card.Actions></Card>),
 };

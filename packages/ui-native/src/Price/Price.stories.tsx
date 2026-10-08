@@ -3,8 +3,12 @@ import { View } from "react-native";
 import { Price } from "./Price";
 
 const meta = {
-  title: "Native/Price",
+  title: "Native/Atoms/Price",
   component: Price,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: ["Badge"],
+  },
   args: {
     price: 199000,
   },

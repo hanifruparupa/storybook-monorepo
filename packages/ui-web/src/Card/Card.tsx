@@ -2,7 +2,7 @@ import * as React from "react";
 import type { CSSProperties } from "react";
 import type { CardProps } from "@repo/primitives";
 import { resolveCardTheme } from "@repo/primitives";
-import { CardContent, CardFooter, CardHeader, CardImage, CardTitle } from "./CardSections";
+import { CardActions, CardContent, CardFooter, CardHeader, CardImage, CardMedia, CardTitle } from "./CardSections";
 
 export interface WebCardProps extends CardProps {
   style?: CSSProperties;
@@ -45,6 +45,8 @@ export type CardComponent = ((props: WebCardProps) => React.JSX.Element) & {
   Footer: typeof CardFooter;
   Image: typeof CardImage;
   Title: typeof CardTitle;
+  Media: typeof CardMedia;
+  Actions: typeof CardActions;
 };
 export const Card: CardComponent = Object.assign(CardRoot, {
   Header: CardHeader,
@@ -52,4 +54,6 @@ export const Card: CardComponent = Object.assign(CardRoot, {
   Footer: CardFooter,
   Image: CardImage,
   Title: CardTitle,
+  Media: CardMedia,
+  Actions: CardActions,
 });

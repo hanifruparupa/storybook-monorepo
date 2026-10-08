@@ -3,8 +3,12 @@ import { View } from "react-native";
 import { Image } from "./Image";
 
 const meta = {
-  title: "Native/Image",
+  title: "Native/Atoms/Image",
   component: Image,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     source: "https://picsum.photos/seed/purifier/600/600",
     alt: "Product image",

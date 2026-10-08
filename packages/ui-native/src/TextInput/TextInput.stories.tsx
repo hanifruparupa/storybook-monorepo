@@ -39,8 +39,12 @@ function ClearableTextInput(props: NativeTextInputProps) {
 }
 
 const meta = {
-  title: "Native/TextInput",
+  title: "Native/Atoms/TextInput",
   component: TextInput,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     label: "Label",
     placeholder: "Placeholder",

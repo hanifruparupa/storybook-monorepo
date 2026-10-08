@@ -3,8 +3,12 @@ import { View } from "react-native";
 import { Badge } from "./Badge";
 
 const meta = {
-  title: "Native/Badge",
+  title: "Native/Atoms/Badge",
   component: Badge,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     label: "Badge",
   },

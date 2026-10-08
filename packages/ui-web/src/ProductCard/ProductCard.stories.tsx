@@ -3,8 +3,12 @@ import { expect, fn, userEvent, within } from "storybook/test";
 import { ProductCard } from "./ProductCard";
 
 const meta = {
-  title: "Web/ProductCard",
+  title: "Web/Molecules/ProductCard",
   component: ProductCard,
+  parameters: {
+    atomicLevel: "molecule",
+    dependsOn: ["Card", "Card.Image", "Card.Title", "Card.Content", "Badge", "Price", "Rating"],
+  },
   args: {
     imageUrl: "https://picsum.photos/seed/purifier/600/600",
     imageAlt: "Air purifier",

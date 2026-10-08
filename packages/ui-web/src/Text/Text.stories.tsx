@@ -2,8 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Text } from "./Text";
 
 const meta = {
-  title: "Web/Text",
+  title: "Web/Atoms/Text",
   component: Text,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     children: "The quick brown fox jumps over the lazy dog",
     variant: "body",

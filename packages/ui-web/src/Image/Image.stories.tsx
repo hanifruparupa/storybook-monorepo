@@ -2,8 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Image } from "./Image";
 
 const meta = {
-  title: "Web/Image",
+  title: "Web/Atoms/Image",
   component: Image,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     source: "https://picsum.photos/seed/purifier/600/600",
     alt: "Water purifier product photo",

@@ -3,8 +3,12 @@ import { View } from "react-native";
 import { Text } from "./Text";
 
 const meta = {
-  title: "Native/Text",
+  title: "Native/Atoms/Text",
   component: Text,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     children: "Sample text",
   },

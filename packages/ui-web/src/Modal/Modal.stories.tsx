@@ -22,8 +22,12 @@ function ModalDemo(props: Omit<WebModalProps, "visible">) {
 }
 
 const meta = {
-  title: "Web/Modal",
+  title: "Web/Organisms/Modal",
   component: Modal,
+  parameters: {
+    atomicLevel: "organism",
+    dependsOn: ["Text", "Button"],
+  },
   args: {
     visible: true,
     title: "Delete item",

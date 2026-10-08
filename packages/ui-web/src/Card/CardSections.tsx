@@ -1,10 +1,13 @@
 import * as React from "react";
 import type {
+  CardActionsProps,
   CardImageProps,
+  CardMediaProps,
   CardSectionProps,
   CardTitleProps,
 } from "@repo/primitives";
 import { resolveCardSectionTheme } from "@repo/primitives";
+import { space } from "@repo/tokens";
 import { Image } from "../Image/Image";
 import { Text } from "../Text/Text";
 
@@ -154,5 +157,84 @@ export function CardTitle({
     >
       {children}
     </Text>
+  );
+}
+
+export interface WebCardMediaProps extends CardMediaProps {
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+export interface WebCardActionsProps extends CardActionsProps {
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+export function CardMedia({
+  children,
+  testID,
+  style,
+  className,
+}: WebCardMediaProps): React.JSX.Element {
+  const t = resolveCardSectionTheme("media");
+
+  const mediaStyle: React.CSSProperties = {
+    padding: t.padding,
+    boxSizing: "border-box",
+    ...(t.borderEdge === "bottom"
+      ? { borderBottom: `${t.borderWidth}px solid ${t.borderColor}` }
+      : null),
+    ...(t.borderEdge === "top"
+      ? { borderTop: `${t.borderWidth}px solid ${t.borderColor}` }
+      : null),
+    ...style,
+  };
+
+  return (
+    <div className={className} style={mediaStyle} data-testid={testID}>
+      {children}
+    </div>
+  );
+}
+
+export function CardActions({
+  children,
+  align = "end",
+  testID,
+  style,
+  className,
+}: WebCardActionsProps): React.JSX.Element {
+  const t = resolveCardSectionTheme("actions");
+
+  const justifyContent =
+    align === "start"
+      ? "flex-start"
+      : align === "center"
+        ? "center"
+        : align === "between"
+          ? "space-between"
+          : "flex-end";
+
+  const actionsStyle: React.CSSProperties = {
+    padding: t.padding,
+    boxSizing: "border-box",
+    ...(t.borderEdge === "bottom"
+      ? { borderBottom: `${t.borderWidth}px solid ${t.borderColor}` }
+      : null),
+    ...(t.borderEdge === "top"
+      ? { borderTop: `${t.borderWidth}px solid ${t.borderColor}` }
+      : null),
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: space.sm,
+    justifyContent,
+    ...style,
+  };
+
+  return (
+    <div className={className} style={actionsStyle} data-testid={testID}>
+      {children}
+    </div>
   );
 }

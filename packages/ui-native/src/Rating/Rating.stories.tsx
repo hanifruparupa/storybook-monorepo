@@ -3,8 +3,12 @@ import { View } from "react-native";
 import { Rating } from "./Rating";
 
 const meta = {
-  title: "Native/Rating",
+  title: "Native/Atoms/Rating",
   component: Rating,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     value: 4.8,
   },

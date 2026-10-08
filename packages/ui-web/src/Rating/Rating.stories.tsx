@@ -2,8 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Rating } from "./Rating";
 
 const meta = {
-  title: "Web/Rating",
+  title: "Web/Atoms/Rating",
   component: Rating,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     value: 4.8,
     reviewCount: 120,

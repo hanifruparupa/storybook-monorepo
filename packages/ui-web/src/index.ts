@@ -25,3 +25,5 @@ export { CardHeader, CardContent, CardFooter } from "./Card/CardSections";
 export type { WebCardSectionProps } from "./Card/CardSections";
 export { CardImage, CardTitle } from "./Card/CardSections";
 export type { WebCardImageProps, WebCardTitleProps } from "./Card/CardSections";
+export { CardMedia, CardActions } from "./Card/CardSections";
+export type { WebCardMediaProps, WebCardActionsProps } from "./Card/CardSections";

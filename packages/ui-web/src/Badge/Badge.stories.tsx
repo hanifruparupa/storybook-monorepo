@@ -2,8 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Badge } from "./Badge";
 
 const meta = {
-  title: "Web/Badge",
+  title: "Web/Atoms/Badge",
   component: Badge,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     label: "Badge",
     variant: "neutral",

@@ -70,8 +70,12 @@ const clearIcon = (
 );
 
 const meta = {
-  title: "Web/TextInput",
+  title: "Web/Atoms/TextInput",
   component: TextInput,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     label: "Label",
     placeholder: "Placeholder",

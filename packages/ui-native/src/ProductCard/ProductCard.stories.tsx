@@ -4,8 +4,12 @@ import { View } from "react-native";
 import { ProductCard } from "./ProductCard";
 
 const meta = {
-  title: "Native/ProductCard",
+  title: "Native/Molecules/ProductCard",
   component: ProductCard,
+  parameters: {
+    atomicLevel: "molecule",
+    dependsOn: ["Card", "Card.Image", "Card.Title", "Card.Content", "Badge", "Price", "Rating"],
+  },
   args: {
     imageUrl: "https://picsum.photos/seed/purifier/600/600",
     imageAlt: "Air purifier",

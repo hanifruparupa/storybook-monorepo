@@ -4,8 +4,12 @@ import { Text, View } from "react-native";
 import { IconButton } from "./IconButton";
 
 const meta = {
-  title: "Native/IconButton",
+  title: "Native/Atoms/IconButton",
   component: IconButton,
+  parameters: {
+    atomicLevel: "atom",
+    dependsOn: [],
+  },
   args: {
     icon: <Text>＋</Text>,
     accessibilityLabel: "Add to cart",
