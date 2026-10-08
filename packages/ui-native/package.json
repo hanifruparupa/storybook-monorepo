@@ -24,7 +24,8 @@
   },
   "peerDependencies": {
     "react": ">=18",
-    "react-native": ">=0.72"
+    "react-native": ">=0.72",
+    "react-native-fast-image": ">=8"
   },
   "publishConfig": {
     "access": "public",
@@ -51,6 +52,7 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-native": "catalog:",
+    "react-native-fast-image": "^9.1.0",
     "react-native-web": "catalog:",
     "storybook": "10.6.1",
     "tsup": "^8.3.0",
