@@ -47,20 +47,22 @@ export function Banner({
     return () => cancelAnimationFrame(frame);
   }, [index]);
 
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    slides.forEach((s) => {
+      const img = new window.Image();
+      img.src = s.imageUrl;
+    });
+  }, [slides]);
+
   if (slides.length === 0) return null;
 
   const current = slides[index] ?? slides[0];
   if (current === undefined) return null;
 
-  const innerStyle: React.CSSProperties = {
-    transition:
-      transition === "none"
-        ? undefined
-        : `transform ${motion.base}ms ease, opacity ${motion.base}ms ease`,
-    ...(transition === "slide"
-      ? { transform: entered ? "none" : "translateX(100%)" }
-      : null),
-    ...(transition === "fade" ? { opacity: entered ? 1 : 0 } : null),
+  const fadeStyle: React.CSSProperties = {
+    transition: `opacity ${motion.base}ms ease`,
+    opacity: entered ? 1 : 0,
   };
 
   return (
@@ -74,14 +76,49 @@ export function Banner({
         ...style,
       }}
     >
-      <div style={innerStyle}>
+      {transition === "slide" ? (
+        <div style={{ overflow: "hidden", width: "100%" }}>
+          <div
+            style={{
+              display: "flex",
+              width: `${slides.length * 100}%`,
+              transform: `translateX(-${(index * 100) / slides.length}%)`,
+              transition: `transform ${motion.base}ms ease`,
+            }}
+          >
+            {slides.map((s, i) => (
+              <div
+                key={i}
+                style={{ width: `${100 / slides.length}%` }}
+                aria-hidden={i !== index}
+              >
+                <Image
+                  source={s.imageUrl}
+                  alt={s.alt}
+                  aspectRatio={aspectRatio}
+                  radius={0}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : transition === "fade" ? (
+        <div style={fadeStyle}>
+          <Image
+            source={current.imageUrl}
+            alt={current.alt}
+            aspectRatio={aspectRatio}
+            radius={0}
+          />
+        </div>
+      ) : (
         <Image
           source={current.imageUrl}
           alt={current.alt}
           aspectRatio={aspectRatio}
           radius={0}
         />
-      </div>
+      )}
       <div
         style={{
           position: "absolute",

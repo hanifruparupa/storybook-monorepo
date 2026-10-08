@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Animated, Easing, View, StyleSheet, type StyleProp, type ViewStyle } from "react-native";
+import {
+  Animated,
+  Easing,
+  Image as RNImage,
+  View,
+  StyleSheet,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native";
 import type { BannerProps } from "@repo/primitives";
 import { colors, motion, space, radii } from "@repo/tokens";
 import { Image } from "../Image/Image";
@@ -22,6 +30,13 @@ export function Banner({
   const [width, setWidth] = useState(0);
   const progress = useRef(new Animated.Value(0)).current;
   const enter = useRef(new Animated.Value(1)).current;
+  const tx = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    slides.forEach((s) => {
+      if (s.imageUrl) RNImage.prefetch(s.imageUrl);
+    });
+  }, [slides]);
 
   useEffect(() => {
     if (!autoPlay || slides.length <= 1) return;
@@ -43,7 +58,7 @@ export function Banner({
   }, [index, autoPlay, duration, slides.length, progress]);
 
   useEffect(() => {
-    if (transition === "none" || slides.length <= 1) return;
+    if (transition !== "fade" || slides.length <= 1) return;
     enter.setValue(0);
     const anim = Animated.timing(enter, {
       toValue: 1,
@@ -56,13 +71,25 @@ export function Banner({
   }, [index, transition, slides.length, enter]);
 
   useEffect(() => {
+    if (transition !== "slide" || slides.length <= 1 || width <= 0) return;
+    const anim = Animated.timing(tx, {
+      toValue: -index * width,
+      duration: motion.base,
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: true,
+    });
+    anim.start();
+    return () => anim.stop();
+  }, [index, transition, width, slides.length, tx]);
+
+  useEffect(() => {
     onIndexChange?.(index);
   }, [index, onIndexChange]);
 
   if (slides.length === 0) return null;
 
-  const slide = slides[index];
-  if (!slide) return null;
+  const current = slides[index];
+  if (!current) return null;
 
   return (
     <View
@@ -70,27 +97,39 @@ export function Banner({
       testID={testID}
       onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
     >
-      <Animated.View
-        style={[
-          { overflow: "hidden" },
-          transition === "slide"
-            ? {
-                transform: [
-                  {
-                    translateX: enter.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [width || 1, 0],
-                    }),
-                  },
-                ],
-              }
-            : transition === "fade"
-              ? { opacity: enter }
-              : null,
-        ]}
-      >
-        <Image source={slide.imageUrl} alt={slide.alt} aspectRatio={aspectRatio} radius={0} />
-      </Animated.View>
+      {transition === "slide" ? (
+        <View style={{ overflow: "hidden", width: "100%" }}>
+          <Animated.View
+            style={{
+              flexDirection: "row",
+              width: width * slides.length,
+              transform: [{ translateX: tx }],
+            }}
+          >
+            {slides.map((s, i) => (
+              <View
+                key={i}
+                style={{ width: width || undefined }}
+                accessibilityElementsHidden={i !== index}
+                importantForAccessibility={i === index ? "auto" : "no-hide-descendants"}
+              >
+                <Image source={s.imageUrl} alt={s.alt} aspectRatio={aspectRatio} radius={0} />
+              </View>
+            ))}
+          </Animated.View>
+        </View>
+      ) : transition === "fade" ? (
+        <Animated.View style={{ overflow: "hidden", opacity: enter }}>
+          <Image
+            source={current.imageUrl}
+            alt={current.alt}
+            aspectRatio={aspectRatio}
+            radius={0}
+          />
+        </Animated.View>
+      ) : (
+        <Image source={current.imageUrl} alt={current.alt} aspectRatio={aspectRatio} radius={0} />
+      )}
       <View style={styles.dots}>
         {slides.map((_, i) =>
           i === index ? (
