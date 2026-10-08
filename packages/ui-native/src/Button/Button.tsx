@@ -1,6 +1,7 @@
 import type { ButtonProps } from "@repo/primitives";
 import { resolveButtonSize, resolveButtonTheme } from "@repo/primitives";
-import { Pressable, Text, StyleSheet, type StyleProp, type ViewStyle } from "react-native";
+import { space } from "@repo/tokens";
+import { Pressable, Text, View, StyleSheet, type StyleProp, type ViewStyle } from "react-native";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
 export interface NativeButtonProps extends ButtonProps {
@@ -13,6 +14,8 @@ export function Button({
   size = "md",
   disabled = false,
   fullWidth = false,
+  leftIcon,
+  rightIcon,
   onPress,
   testID,
   style,
@@ -49,18 +52,22 @@ export function Button({
       {({ pressed }) => {
         const t = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
         return (
-          <Text
-            style={[
-              styles.label,
-              {
-                color: t.textColor,
-                fontSize: t.fontSize,
-                fontWeight: t.fontWeight,
-              },
-            ]}
-          >
-            {label}
-          </Text>
+          <View style={styles.content}>
+            {leftIcon}
+            <Text
+              style={[
+                styles.label,
+                {
+                  color: t.textColor,
+                  fontSize: t.fontSize,
+                  fontWeight: t.fontWeight,
+                },
+              ]}
+            >
+              {label}
+            </Text>
+            {rightIcon}
+          </View>
         );
       }}
     </Pressable>
@@ -72,6 +79,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: space.sm,
   },
   label: {
     textAlign: "center",

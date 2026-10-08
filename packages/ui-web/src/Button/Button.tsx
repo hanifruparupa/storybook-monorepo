@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { ButtonProps } from "@repo/primitives";
 import { resolveButtonSize, resolveButtonTheme } from "@repo/primitives";
+import { space } from "@repo/tokens";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
 export interface WebButtonProps extends ButtonProps {
@@ -11,7 +12,9 @@ export interface WebButtonProps extends ButtonProps {
 
 export function Button({
   label,
+  leftIcon,
   onPress,
+  rightIcon,
   variant = "primary",
   size = "md",
   disabled = false,
@@ -80,7 +83,32 @@ export function Button({
         if (!disabled) onPress?.();
       }}
     >
-      {label}
+      <span
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: space.sm,
+        }}
+      >
+        {leftIcon ? (
+          <span
+            aria-hidden="true"
+            style={{ display: "inline-flex", flexShrink: 0 }}
+          >
+            {leftIcon}
+          </span>
+        ) : null}
+        {label}
+        {rightIcon ? (
+          <span
+            aria-hidden="true"
+            style={{ display: "inline-flex", flexShrink: 0 }}
+          >
+            {rightIcon}
+          </span>
+        ) : null}
+      </span>
     </button>
   );
 }

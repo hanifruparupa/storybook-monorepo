@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn, userEvent, within } from "storybook/test";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { Button } from "./Button";
 
 const meta = {
@@ -107,5 +107,27 @@ export const DisabledDoesNotFire: Story = {
     // disabled state instead of clicking.
     await expect(button).toBeDisabled();
     await expect(args.onPress).not.toHaveBeenCalled();
+  },
+};
+
+export const WithLeftIcon: Story = {
+  args: {
+    label: "Add to cart",
+    leftIcon: <Text>＋</Text>,
+  },
+};
+
+export const WithRightIcon: Story = {
+  args: {
+    label: "Next",
+    rightIcon: <Text>☆</Text>,
+  },
+};
+
+export const WithBothIcons: Story = {
+  args: {
+    label: "Share",
+    leftIcon: <Text>＋</Text>,
+    rightIcon: <Text>☆</Text>,
   },
 };

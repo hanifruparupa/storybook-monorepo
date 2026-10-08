@@ -98,10 +98,10 @@ export function ProductCard({
           <Price price={price} originalPrice={originalPrice} discountPercent={discountPercent} />
           {promoText ? (
             <View style={styles.promo}>
-              <Text variant="label" style={{ color: colors.dangerBorder }}>
+              <Text variant="label" style={{ color: colors.promoText }}>
                 ⓘ
               </Text>
-              <Text variant="label" numberOfLines={1} style={{ color: colors.dangerBorder, flexShrink: 1 }}>
+              <Text variant="label" numberOfLines={1} style={{ color: colors.promoText, flexShrink: 1 }}>
                 {promoText}
               </Text>
             </View>
@@ -146,8 +146,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: space.xs,
-    // paddingHorizontal: space.sm,
+    paddingHorizontal: space.sm,
     paddingVertical: space.xs,
     borderRadius: radii.sm,
+    backgroundColor: colors.promoBg,
   },
 });

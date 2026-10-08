@@ -19,3 +19,5 @@ export type { WebProductCardProps } from "./ProductCard/ProductCard";
 export { useBreakpoint, BreakpointProvider } from "./hooks/useBreakpoint";
 export { Modal } from "./Modal/Modal";
 export type { WebModalProps } from "./Modal/Modal";
+export { IconButton } from "./IconButton/IconButton";
+export type { WebIconButtonProps } from "./IconButton/IconButton";

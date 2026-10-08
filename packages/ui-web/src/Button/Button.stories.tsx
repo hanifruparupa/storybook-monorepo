@@ -124,3 +124,57 @@ export const KeyboardActivates: Story = {
     await expect(args.onPress).toHaveBeenCalled();
   },
 };
+
+const leftArrowIcon = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M10 3 5 8l5 5" />
+  </svg>
+);
+
+const rightArrowIcon = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M6 3l5 5-5 5" />
+  </svg>
+);
+
+export const WithLeftIcon: Story = {
+  args: {
+    label: "Back",
+    leftIcon: leftArrowIcon,
+  },
+};
+
+export const WithRightIcon: Story = {
+  args: {
+    label: "Next",
+    rightIcon: rightArrowIcon,
+  },
+};
+
+export const WithBothIcons: Story = {
+  args: {
+    label: "More",
+    leftIcon: leftArrowIcon,
+    rightIcon: rightArrowIcon,
+  },
+};
