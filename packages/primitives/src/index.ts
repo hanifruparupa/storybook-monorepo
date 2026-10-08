@@ -355,6 +355,23 @@ export function resolveCardSectionTheme(section: CardSection): CardSectionTheme 
 }
 
 // ---------------------------------------------------------------------------
+// Card parts: Card.Image (media) and Card.Title (typography)
+// ---------------------------------------------------------------------------
+
+export interface CardImageProps extends ImageProps {
+  /** Overlays rendered on top of the media (e.g. a badge or cashback banner). */
+  children?: ReactNode;
+}
+
+export interface CardTitleProps {
+  children: ReactNode;
+  /** Typography variant. Defaults to "title". */
+  variant?: TextVariant;
+  numberOfLines?: number;
+  testID?: string;
+}
+
+// ---------------------------------------------------------------------------
 // Badge (atom)
 // ---------------------------------------------------------------------------
 
