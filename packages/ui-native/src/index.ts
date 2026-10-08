@@ -27,3 +27,5 @@ export { Modal } from "./Modal/Modal";
 export type { NativeModalProps } from "./Modal/Modal";
 export { IconButton } from "./IconButton/IconButton";
 export type { NativeIconButtonProps } from "./IconButton/IconButton";
+export { Banner } from "./Banner/Banner";
+export type { NativeBannerProps } from "./Banner/Banner";

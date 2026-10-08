@@ -1,0 +1,63 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, within } from "storybook/test";
+import { Banner } from "./Banner";
+
+const meta = {
+  title: "Web/Molecules/Banner",
+  component: Banner,
+  parameters: { atomicLevel: "molecule", dependsOn: ["Image"] },
+  args: {
+    slides: [
+      { imageUrl: "https://picsum.photos/seed/banner1/1200/675", alt: "Promo 1" },
+      { imageUrl: "https://picsum.photos/seed/banner2/1200/675", alt: "Promo 2" },
+      { imageUrl: "https://picsum.photos/seed/banner3/1200/675", alt: "Promo 3" },
+    ],
+    duration: 3000,
+    transition: "slide",
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 480 }}>
+        <Story />
+      </div>
+    ),
+  ],
+} satisfies Meta<typeof Banner>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  tags: ["!test"],
+};
+
+export const Slow: Story = {
+  tags: ["!test"],
+  args: {
+    duration: 5000,
+  },
+};
+
+export const Paused: Story = {
+  args: {
+    autoPlay: false,
+  },
+};
+
+export const SingleSlide: Story = {
+  args: {
+    slides: [
+      { imageUrl: "https://picsum.photos/seed/banner1/1200/675", alt: "Promo 1" },
+    ],
+  },
+};
+
+export const RendersDots: Story = {
+  args: { autoPlay: false },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getAllByTestId(/^banner-dot-/)).toHaveLength(3);
+  },
+};
+export const Fade: Story = { args: { transition: "fade", autoPlay: false } };
+export const NoTransition: Story = { args: { transition: "none", autoPlay: false } };
