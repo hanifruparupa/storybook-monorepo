@@ -119,6 +119,9 @@ Defined in `packages/tokens/src/index.ts`:
 - **MUST**: event props use `onPress` in the shared contract; each platform wires
   it to its native event (`onClick` on web).
 - **MUST**: expose `testID` in the contract; web maps it to `data-testid`.
+- **MUST**: compound components expose their parts **both** as named exports
+  (`CardHeader`, `CardImage`, …) **and** as a compound alias (`Card.Header`, `Card.Image`, …),
+  so tree-shaking stays safe while the ergonomic API is available.
 
 ---
 
@@ -137,7 +140,11 @@ Defined in `packages/tokens/src/index.ts`:
 
 - **MUST**: every shared component ships stories covering **all** variants, sizes,
   and states (default, pressed where visible, disabled, full-width).
-- **MUST**: story titles are grouped: `Web/Button` (DOM) and `Native/Button` (RN).
+- **MUST**: story titles are grouped by platform **and atomic level**:
+  `Web/Atoms/Button`, `Web/Molecules/ProductCard`, `Web/Organisms/Modal`
+  (and the `Native/*` equivalents).
+- **MUST**: each story meta declares `parameters: { atomicLevel, dependsOn }` — its
+  atomic level and the components it composes — so relationships/impact are visible in Storybook.
 - **MUST**: controls are declared in `argTypes` for `variant`/`size` and any enum.
 - **MUST**: use `fn()` from `storybook/test` for event handlers so actions show.
 - **MUST NOT**: duplicate stories across packages; the aggregate portal

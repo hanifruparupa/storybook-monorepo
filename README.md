@@ -86,17 +86,21 @@ Both packages implement the same contracts from `@repo/primitives`:
 
 | Component | Web (`@ruparupa/ui-web`) | Native (`@ruparupa/ui-native`) | Features |
 |---|---|---|---|
-| `Button` | DOM `<button>` | RN `Pressable` | variants `primary\|secondary\|ghost`, sizes `sm\|md\|lg`, disabled, fullWidth |
+| `Button` | DOM `<button>` | RN `Pressable` | variants `primary\|secondary\|ghost`, sizes `sm\|md\|lg`, `leftIcon`/`rightIcon`, **icon-only** (omit `label`), disabled, fullWidth |
+| `IconButton` | DOM `<button>` | RN `Pressable` | icon-only, square; requires `accessibilityLabel` |
 | `TextInput` | DOM `<input>` | RN `TextInput` | label, placeholder, left/right icon slots, focused/blur/disabled/error states |
 | `Text` (atom) | `<span>` | RN `Text` | variants `title\|body\|caption\|price\|priceOriginal\|label`, truncation |
 | `Image` (atom) | `<img>` | RN `Image` | aspect-ratio, radius, cover |
 | `Card` (atom) | `<div>` | RN `View` | variants `plain\|outlined\|elevated` |
+| `Card.Image` / `Card.Title` | media / typography | media / typography | image (with overlay slot) / title text |
+| `Card.Header` / `Card.Content` / `Card.Footer` | sections | sections | padded sections with divider edges |
+| `Card.Media` / `Card.Actions` | sections | sections | generic media slot / action row (`align`) |
 | `Badge` (atom) | `<span>` | RN `View`+`Text` | variants `neutral\|discount\|info\|chip` |
 | `Rating` (atom) | row | row | star value + review count |
 | `Price` (atom) | row | row | original (strikethrough) + discount `%` + current, `formatCurrency` (Rp, `.` thousands, "ribu/juta") |
 | `ProductCard` (molecule) | DOM | RN | image + corner chip + 2-line title + price + promo strip + rating |
 
-Each component ships stories under `Web/*` and `Native/*`, aggregated by `apps/storybook`.
+Each component ships stories grouped by platform and atomic level (`Web/Atoms/*`, `Web/Molecules/*`, `Web/Organisms/*` and the `Native/*` equivalents), aggregated by `apps/storybook`. Card parts are also available as **named exports** (`CardImage`, `CardTitle`, …) for tree-shaking, plus the compound alias (`Card.Image`, `Card.Title`, …).
 
 ## Adding a component
 
