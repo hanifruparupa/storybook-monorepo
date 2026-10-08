@@ -29,3 +29,5 @@ export { CardMedia, CardActions } from "./Card/CardSections";
 export type { WebCardMediaProps, WebCardActionsProps } from "./Card/CardSections";
 export { Banner } from "./Banner/Banner";
 export type { WebBannerProps } from "./Banner/Banner";
+export { Skeleton } from "./Skeleton/Skeleton";
+export type { WebSkeletonProps } from "./Skeleton/Skeleton";

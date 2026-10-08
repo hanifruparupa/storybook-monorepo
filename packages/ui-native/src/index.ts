@@ -29,3 +29,5 @@ export { IconButton } from "./IconButton/IconButton";
 export type { NativeIconButtonProps } from "./IconButton/IconButton";
 export { Banner } from "./Banner/Banner";
 export type { NativeBannerProps } from "./Banner/Banner";
+export { Skeleton } from "./Skeleton/Skeleton";
+export type { NativeSkeletonProps } from "./Skeleton/Skeleton";
