@@ -317,6 +317,44 @@ export function resolveCardTheme(variant: CardVariant = "outlined"): CardTheme {
 }
 
 // ---------------------------------------------------------------------------
+// Card sections (Card.Header / Card.Content / Card.Footer)
+// ---------------------------------------------------------------------------
+
+export type CardSection = "header" | "content" | "footer";
+
+export interface CardSectionProps {
+  children: ReactNode;
+  /** Remove the default padding (e.g. for flush media). */
+  flush?: boolean;
+  testID?: string;
+}
+
+export interface CardSectionTheme {
+  padding: number;
+  borderColor: string;
+  borderWidth: number;
+  /** Edge that carries the divider border. */
+  borderEdge: "none" | "top" | "bottom";
+}
+
+export function resolveCardSectionTheme(section: CardSection): CardSectionTheme {
+  const base = {
+    padding: space.md,
+    borderColor: colors.border,
+    borderWidth: 1,
+  };
+  switch (section) {
+    case "header":
+      return { ...base, borderEdge: "bottom" };
+    case "footer":
+      return { ...base, borderEdge: "top" };
+    case "content":
+    default:
+      return { ...base, borderWidth: 0, borderEdge: "none" };
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Badge (atom)
 // ---------------------------------------------------------------------------
 
