@@ -113,6 +113,7 @@ export function LaptopFrame({ children }: { children: React.ReactNode }): React.
           />
         </div>
         <div
+          tabIndex={0}
           style={{
             background: "#FFFFFF",
             borderRadius: 8,
