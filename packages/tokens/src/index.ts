@@ -37,6 +37,9 @@ export const colors = {
   cashbackLabel: "#4B5563",
   /** Modal backdrop. */
   overlay: "rgba(11, 18, 32, 0.5)",
+  /** Skeleton loading placeholder (base + shimmer highlight). */
+  skeletonBase: "#E7EAF0",
+  skeletonHighlight: "#F6F8FB",
 } as const;
 
 export const radii = {

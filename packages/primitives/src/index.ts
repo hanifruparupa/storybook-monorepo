@@ -720,3 +720,36 @@ export interface BannerProps {
   onIndexChange?: (index: number) => void;
   testID?: string;
 }
+
+// ---------------------------------------------------------------------------
+// Skeleton (atom) — loading placeholder
+// ---------------------------------------------------------------------------
+
+export type SkeletonVariant = "text" | "circle" | "rect";
+
+export interface SkeletonProps {
+  variant?: SkeletonVariant;
+  /** Width (number => px/DP; strings like "100%" allowed). */
+  width?: number | string;
+  /** Height (number => px/DP). */
+  height?: number;
+  /** Shimmer/pulse animation. Defaults to true. */
+  animate?: boolean;
+  testID?: string;
+}
+
+export interface SkeletonTheme {
+  baseColor: string;
+  highlightColor: string;
+  radius: number;
+  duration: number;
+}
+
+export function resolveSkeletonTheme(variant: SkeletonVariant = "text"): SkeletonTheme {
+  return {
+    baseColor: colors.skeletonBase,
+    highlightColor: colors.skeletonHighlight,
+    radius: variant === "circle" ? radii.pill : radii.sm,
+    duration: 1200,
+  };
+}
