@@ -3,6 +3,7 @@ import {
   Animated,
   Easing,
   Image as RNImage,
+  PanResponder,
   View,
   StyleSheet,
   type StyleProp,
@@ -20,6 +21,7 @@ export function Banner({
   slides,
   duration = motion.slide,
   autoPlay = true,
+  loop = true,
   aspectRatio = 16 / 9,
   transition = "slide",
   onIndexChange,
@@ -31,6 +33,40 @@ export function Banner({
   const progress = useRef(new Animated.Value(0)).current;
   const enter = useRef(new Animated.Value(1)).current;
   const tx = useRef(new Animated.Value(0)).current;
+  const dragX = useRef(new Animated.Value(0)).current;
+
+  const indexRef = useRef(0);
+  indexRef.current = index;
+  const loopRef = useRef(loop);
+  loopRef.current = loop;
+  const countRef = useRef(slides.length);
+  countRef.current = slides.length;
+  const widthRef = useRef(width);
+  widthRef.current = width;
+
+  const goTo = (i: number) => {
+    const n = countRef.current;
+    if (n <= 0) return;
+    setIndex(loopRef.current ? ((i % n) + n) % n : Math.min(Math.max(i, 0), n - 1));
+  };
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_e, g) => Math.abs(g.dx) > Math.abs(g.dy) && Math.abs(g.dx) > 6,
+      onPanResponderMove: Animated.event([null, { dx: dragX }], { useNativeDriver: false }),
+      onPanResponderRelease: (_e, g) => {
+        const t = Math.max(40, (widthRef.current || 0) * 0.2);
+        if (g.dx <= -t) goTo(indexRef.current + 1);
+        else if (g.dx >= t) goTo(indexRef.current - 1);
+        Animated.spring(dragX, { toValue: 0, useNativeDriver: false }).start();
+      },
+      onPanResponderTerminate: () => {
+        Animated.spring(dragX, { toValue: 0, useNativeDriver: false }).start();
+      },
+    }),
+  ).current;
+
+  const txCombined = Animated.add(tx, dragX);
 
   useEffect(() => {
     slides.forEach((s) => {
@@ -40,9 +76,11 @@ export function Banner({
 
   useEffect(() => {
     if (!autoPlay || slides.length <= 1) return;
-    const id = setTimeout(() => setIndex((i) => (i + 1) % slides.length), duration);
+    if (!loop && index >= slides.length - 1) return;
+    const next = loop ? (index + 1) % slides.length : index + 1;
+    const id = setTimeout(() => setIndex(next), duration);
     return () => clearTimeout(id);
-  }, [index, autoPlay, duration, slides.length]);
+  }, [index, autoPlay, loop, duration, slides.length]);
 
   useEffect(() => {
     if (!autoPlay || slides.length <= 1) return;
@@ -76,7 +114,7 @@ export function Banner({
       toValue: -index * width,
       duration: motion.base,
       easing: Easing.out(Easing.ease),
-      useNativeDriver: true,
+      useNativeDriver: false,
     });
     anim.start();
     return () => anim.stop();
@@ -96,6 +134,7 @@ export function Banner({
       style={[{ position: "relative", width: "100%" }, style]}
       testID={testID}
       onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
+      {...panResponder.panHandlers}
     >
       {transition === "slide" ? (
         <View style={{ overflow: "hidden", width: "100%" }}>
@@ -103,7 +142,7 @@ export function Banner({
             style={{
               flexDirection: "row",
               width: width * slides.length,
-              transform: [{ translateX: tx }],
+              transform: [{ translateX: txCombined }],
             }}
           >
             {slides.map((s, i) => (

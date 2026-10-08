@@ -14,6 +14,7 @@ export function Banner({
   autoPlay = true,
   aspectRatio = 16 / 9,
   transition = "slide",
+  loop = true,
   onIndexChange,
   testID,
   style,
@@ -23,13 +24,19 @@ export function Banner({
   const [filled, setFilled] = React.useState(false);
   const [entered, setEntered] = React.useState(true);
 
+  const viewportRef = React.useRef<HTMLDivElement>(null);
+  const [vw, setVw] = React.useState(0);
+  const [dragging, setDragging] = React.useState(false);
+  const [drag, setDrag] = React.useState(0);
+  const startX = React.useRef(0);
+
   React.useEffect(() => {
     if (!autoPlay || slides.length <= 1) return;
-    const id = window.setTimeout(() => {
-      setIndex((i) => (i + 1) % slides.length);
-    }, duration);
+    if (!loop && index >= slides.length - 1) return;
+    const next = loop ? (index + 1) % slides.length : index + 1;
+    const id = window.setTimeout(() => setIndex(next), duration);
     return () => window.clearTimeout(id);
-  }, [index, autoPlay, duration, slides.length]);
+  }, [index, autoPlay, loop, duration, slides.length]);
 
   React.useEffect(() => {
     onIndexChange?.(index);
@@ -55,10 +62,58 @@ export function Banner({
     });
   }, [slides]);
 
+  React.useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    setVw(el.clientWidth);
+    const observer = new ResizeObserver(() => {
+      setVw(el.clientWidth);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   if (slides.length === 0) return null;
 
   const current = slides[index] ?? slides[0];
   if (current === undefined) return null;
+
+  const goTo = (i: number): void => {
+    const n = slides.length;
+    if (loop) {
+      setIndex(((i % n) + n) % n);
+    } else {
+      setIndex(Math.min(Math.max(i, 0), n - 1));
+    }
+  };
+
+  const handlePointerDown = (
+    e: React.PointerEvent<HTMLDivElement>,
+  ): void => {
+    setDragging(true);
+    startX.current = e.clientX;
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (
+    e: React.PointerEvent<HTMLDivElement>,
+  ): void => {
+    if (!dragging) return;
+    setDrag(e.clientX - startX.current);
+  };
+
+  const endDrag = (): void => {
+    if (dragging) {
+      const t = Math.max(40, vw * 0.2);
+      if (drag <= -t) {
+        goTo(index + 1);
+      } else if (drag >= t) {
+        goTo(index - 1);
+      }
+    }
+    setDrag(0);
+    setDragging(false);
+  };
 
   const fadeStyle: React.CSSProperties = {
     transition: `opacity ${motion.base}ms ease`,
@@ -76,14 +131,29 @@ export function Banner({
         ...style,
       }}
     >
-      {transition === "slide" ? (
-        <div style={{ overflow: "hidden", width: "100%" }}>
+      <div
+        ref={viewportRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        style={{
+          overflow: "hidden",
+          width: "100%",
+          touchAction: "pan-y",
+          cursor: "grab",
+          userSelect: "none",
+        }}
+      >
+        {transition === "slide" ? (
           <div
             style={{
               display: "flex",
               width: `${slides.length * 100}%`,
-              transform: `translateX(-${(index * 100) / slides.length}%)`,
-              transition: `transform ${motion.base}ms ease`,
+              transform: `translateX(${-index * vw + drag}px)`,
+              transition: dragging
+                ? "none"
+                : `transform ${motion.base}ms ease`,
             }}
           >
             {slides.map((s, i) => (
@@ -101,24 +171,24 @@ export function Banner({
               </div>
             ))}
           </div>
-        </div>
-      ) : transition === "fade" ? (
-        <div style={fadeStyle}>
+        ) : transition === "fade" ? (
+          <div style={fadeStyle}>
+            <Image
+              source={current.imageUrl}
+              alt={current.alt}
+              aspectRatio={aspectRatio}
+              radius={0}
+            />
+          </div>
+        ) : (
           <Image
             source={current.imageUrl}
             alt={current.alt}
             aspectRatio={aspectRatio}
             radius={0}
           />
-        </div>
-      ) : (
-        <Image
-          source={current.imageUrl}
-          alt={current.alt}
-          aspectRatio={aspectRatio}
-          radius={0}
-        />
-      )}
+        )}
+      </div>
       <div
         style={{
           position: "absolute",

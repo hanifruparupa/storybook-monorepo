@@ -16,6 +16,11 @@ const meta = {
     duration: 3000,
     transition: "slide",
   },
+  argTypes: {
+    loop: { control: "boolean" },
+    autoPlay: { control: "boolean" },
+    transition: { control: "select", options: ["slide", "fade", "none"] },
+  },
   decorators: [
     (Story) => (
       <View style={{ padding: 16, width: 360 }}>
@@ -58,3 +63,4 @@ export const RendersDots: Story = {
 
 export const Fade: Story = { args: { transition: "fade", autoPlay: false } };
 export const NoTransition: Story = { args: { transition: "none", autoPlay: false } };
+export const NoLoop: Story = { args: { loop: false, autoPlay: false } };
