@@ -710,6 +710,8 @@ export interface BannerProps {
   duration?: number;
   /** Auto-advance slides. Defaults to true. */
   autoPlay?: boolean;
+  /** Wrap from the last slide to the first (and vice versa). Defaults to true. */
+  loop?: boolean;
   /** Media aspect ratio (width / height). Defaults to 16 / 9. */
   aspectRatio?: number;
   /** How the incoming slide appears. Defaults to "slide". */
