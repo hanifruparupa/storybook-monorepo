@@ -35,6 +35,10 @@ export interface ButtonProps {
   variant?: ButtonVariant;
   /** Fixed size, or a value per viewport breakpoint (e.g. `{ xs: "sm", lg: "lg" }`). */
   size?: ButtonSize | ResponsiveSize;
+  /** Optional icon rendered before the label. */
+  leftIcon?: ReactNode;
+  /** Optional icon rendered after the label. */
+  rightIcon?: ReactNode;
   disabled?: boolean;
   fullWidth?: boolean;
   testID?: string;
@@ -110,6 +114,39 @@ export function resolveButtonTheme(
         textColor: colors.onPrimary,
       };
   }
+}
+
+// ---------------------------------------------------------------------------
+// IconButton (atom) — icon-only button
+// ---------------------------------------------------------------------------
+
+export interface IconButtonProps {
+  icon: ReactNode;
+  /** Required: icon-only buttons must expose an accessible name. */
+  accessibilityLabel: string;
+  onPress?: () => void;
+  variant?: ButtonVariant;
+  size?: ButtonSize | ResponsiveSize;
+  disabled?: boolean;
+  testID?: string;
+}
+
+export interface IconButtonTheme extends ButtonTheme {
+  /** Square edge length (min width & height). */
+  dimension: number;
+}
+
+export function resolveIconButtonTheme(
+  variant: ButtonVariant = "primary",
+  size: ButtonSize = "md",
+  disabled = false,
+  pressed = false,
+): IconButtonTheme {
+  return {
+    ...resolveButtonTheme(variant, size, disabled, pressed),
+    paddingHorizontal: 0,
+    dimension: controlHeight[size],
+  };
 }
 
 // ---------------------------------------------------------------------------
