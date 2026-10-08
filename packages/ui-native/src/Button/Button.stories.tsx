@@ -131,3 +131,17 @@ export const WithBothIcons: Story = {
     rightIcon: <Text>☆</Text>,
   },
 };
+
+export const IconOnly: Story = {
+  args: { label: undefined, leftIcon: <Text>＋</Text>, accessibilityLabel: "Add to cart", onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button", { name: "Add to cart" });
+    await userEvent.click(button);
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+  },
+};
+
+export const IconOnlyDisabled: Story = {
+  args: { label: undefined, leftIcon: <Text>＋</Text>, accessibilityLabel: "Add to cart", disabled: true },
+};

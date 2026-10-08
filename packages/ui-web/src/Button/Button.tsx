@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { ButtonProps } from "@repo/primitives";
-import { resolveButtonSize, resolveButtonTheme } from "@repo/primitives";
+import { resolveButtonSize, resolveButtonTheme, resolveIconButtonTheme } from "@repo/primitives";
 import { space } from "@repo/tokens";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
@@ -12,6 +12,7 @@ export interface WebButtonProps extends ButtonProps {
 
 export function Button({
   label,
+  accessibilityLabel,
   leftIcon,
   onPress,
   rightIcon,
@@ -31,6 +32,8 @@ export function Button({
   const resolvedSize = resolveButtonSize(size, breakpoint);
 
   const theme = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
+  const iconTheme = resolveIconButtonTheme(variant, resolvedSize, disabled, pressed);
+  const iconOnly = label === undefined || label === "";
 
   const buttonStyle: React.CSSProperties = {
     backgroundColor: theme.backgroundColor,
@@ -39,7 +42,7 @@ export function Button({
     borderStyle: "solid",
     color: theme.textColor,
     minHeight: theme.minHeight,
-    paddingInline: theme.paddingHorizontal,
+    paddingInline: iconOnly ? 0 : theme.paddingHorizontal,
     paddingBlock: 0,
     borderRadius: theme.radius,
     fontSize: theme.fontSize,
@@ -49,7 +52,8 @@ export function Button({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    width: fullWidth ? "100%" : undefined,
+    width: iconOnly ? iconTheme.dimension : fullWidth ? "100%" : undefined,
+    height: iconOnly ? iconTheme.dimension : undefined,
     maxWidth: "100%",
     cursor: disabled ? "not-allowed" : "pointer",
     // Keep full opacity on hover: lowering it lightens the background and
@@ -69,7 +73,7 @@ export function Button({
       className={className}
       style={buttonStyle}
       disabled={disabled}
-      aria-label={label}
+      aria-label={accessibilityLabel ?? label}
       aria-disabled={disabled || undefined}
       data-testid={testID}
       onMouseEnter={() => setHovered(true)}
@@ -83,32 +87,38 @@ export function Button({
         if (!disabled) onPress?.();
       }}
     >
-      <span
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: space.sm,
-        }}
-      >
-        {leftIcon ? (
-          <span
-            aria-hidden="true"
-            style={{ display: "inline-flex", flexShrink: 0 }}
-          >
-            {leftIcon}
-          </span>
-        ) : null}
-        {label}
-        {rightIcon ? (
-          <span
-            aria-hidden="true"
-            style={{ display: "inline-flex", flexShrink: 0 }}
-          >
-            {rightIcon}
-          </span>
-        ) : null}
-      </span>
+      {iconOnly ? (
+        <span aria-hidden="true" style={{ display: "inline-flex" }}>
+          {leftIcon ?? rightIcon}
+        </span>
+      ) : (
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: space.sm,
+          }}
+        >
+          {leftIcon ? (
+            <span
+              aria-hidden="true"
+              style={{ display: "inline-flex", flexShrink: 0 }}
+            >
+              {leftIcon}
+            </span>
+          ) : null}
+          {label}
+          {rightIcon ? (
+            <span
+              aria-hidden="true"
+              style={{ display: "inline-flex", flexShrink: 0 }}
+            >
+              {rightIcon}
+            </span>
+          ) : null}
+        </span>
+      )}
     </button>
   );
 }

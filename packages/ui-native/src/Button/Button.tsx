@@ -1,5 +1,5 @@
 import type { ButtonProps } from "@repo/primitives";
-import { resolveButtonSize, resolveButtonTheme } from "@repo/primitives";
+import { resolveButtonSize, resolveButtonTheme, resolveIconButtonTheme } from "@repo/primitives";
 import { space } from "@repo/tokens";
 import { Pressable, Text, View, StyleSheet, type StyleProp, type ViewStyle } from "react-native";
 import { useBreakpoint } from "../hooks/useBreakpoint";
@@ -10,6 +10,7 @@ export interface NativeButtonProps extends ButtonProps {
 
 export function Button({
   label,
+  accessibilityLabel,
   variant = "primary",
   size = "md",
   disabled = false,
@@ -22,28 +23,36 @@ export function Button({
 }: NativeButtonProps) {
   const breakpoint = useBreakpoint();
   const resolvedSize = resolveButtonSize(size, breakpoint);
+  const iconOnly = label === undefined || label === "";
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={label}
+      accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}
       testID={testID}
       onPress={disabled ? undefined : onPress}
       style={({ pressed }) => {
-        const t = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
+        const theme = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
+        const iconTheme = resolveIconButtonTheme(variant, resolvedSize, disabled, pressed);
         return [
           styles.base,
           {
-            backgroundColor: t.backgroundColor,
-            borderColor: t.borderColor,
-            borderWidth: t.borderWidth,
-            minHeight: t.minHeight,
-            paddingHorizontal: t.paddingHorizontal,
-            borderRadius: t.radius,
-            opacity: t.opacity,
+            backgroundColor: theme.backgroundColor,
+            borderColor: theme.borderColor,
+            borderWidth: theme.borderWidth,
+            minHeight: theme.minHeight,
+            borderRadius: theme.radius,
+            opacity: theme.opacity,
             alignSelf: fullWidth ? "stretch" : "flex-start",
             width: fullWidth ? "100%" : undefined,
+            ...(iconOnly
+              ? {
+                  width: iconTheme.dimension,
+                  height: iconTheme.dimension,
+                  paddingHorizontal: 0,
+                }
+              : { paddingHorizontal: theme.paddingHorizontal }),
           },
           style,
         ];
@@ -51,6 +60,9 @@ export function Button({
     >
       {({ pressed }) => {
         const t = resolveButtonTheme(variant, resolvedSize, disabled, pressed);
+        if (iconOnly) {
+          return <View style={styles.content}>{leftIcon ?? rightIcon}</View>;
+        }
         return (
           <View style={styles.content}>
             {leftIcon}

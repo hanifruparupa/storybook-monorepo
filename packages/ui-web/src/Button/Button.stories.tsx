@@ -178,3 +178,32 @@ export const WithBothIcons: Story = {
     rightIcon: rightArrowIcon,
   },
 };
+
+const plusIcon = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <path d="M8 3v10M3 8h10" />
+  </svg>
+);
+
+export const IconOnly: Story = {
+  args: { label: undefined, leftIcon: plusIcon, accessibilityLabel: "Add to cart", onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button", { name: "Add to cart" });
+    await userEvent.click(button);
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+  },
+};
+
+export const IconOnlyDisabled: Story = {
+  args: { label: undefined, leftIcon: plusIcon, accessibilityLabel: "Add to cart", disabled: true },
+};
