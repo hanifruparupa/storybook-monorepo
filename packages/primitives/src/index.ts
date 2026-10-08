@@ -30,15 +30,21 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 /** The single props contract every platform implementation must satisfy. */
 export interface ButtonProps {
-  label: string;
+  /**
+   * Visible label. Optional when an icon is provided (icon-only button).
+   * When omitted, pass `accessibilityLabel` so the button has an accessible name.
+   */
+  label?: string;
   onPress?: () => void;
   variant?: ButtonVariant;
   /** Fixed size, or a value per viewport breakpoint (e.g. `{ xs: "sm", lg: "lg" }`). */
   size?: ButtonSize | ResponsiveSize;
-  /** Optional icon rendered before the label. */
+  /** Optional icon rendered before the label (or the only content when icon-only). */
   leftIcon?: ReactNode;
   /** Optional icon rendered after the label. */
   rightIcon?: ReactNode;
+  /** Accessible name; required when there is no visible `label`. */
+  accessibilityLabel?: string;
   disabled?: boolean;
   fullWidth?: boolean;
   testID?: string;
