@@ -109,6 +109,8 @@ export const motion = {
   fast: 150,
   base: 250,
   slow: 400,
+  /** Auto-advance duration for carousels/banners (ms). */
+  slide: 3000,
 } as const;
 
 /** Shared easing curve (CSS cubic-bezier; RN: Easing.bezier(0.2, 0, 0, 1)). */

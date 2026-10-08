@@ -692,3 +692,29 @@ export function resolveModalTheme(placement: ModalPlacement = "center"): ModalTh
     duration: motion.base,
   };
 }
+
+// ---------------------------------------------------------------------------
+// Banner (molecule) — image carousel with a timed dot indicator
+// ---------------------------------------------------------------------------
+
+export interface BannerSlide {
+  imageUrl: string;
+  alt?: string;
+}
+
+export type BannerTransition = "slide" | "fade" | "none";
+
+export interface BannerProps {
+  slides: BannerSlide[];
+  /** How long each slide is shown, in ms. Defaults to `motion.slide`. */
+  duration?: number;
+  /** Auto-advance slides. Defaults to true. */
+  autoPlay?: boolean;
+  /** Media aspect ratio (width / height). Defaults to 16 / 9. */
+  aspectRatio?: number;
+  /** How the incoming slide appears. Defaults to "slide". */
+  transition?: BannerTransition;
+  /** Called when the active slide changes. */
+  onIndexChange?: (index: number) => void;
+  testID?: string;
+}
