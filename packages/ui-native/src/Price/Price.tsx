@@ -21,20 +21,28 @@ export function Price({
   return (
     <View
       testID={testID}
-      style={[{ flexDirection: "row", alignItems: "baseline", gap: 8 }, style]}
+      style={[{
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        gap: 8
+      }, style]}
     >
-      {typeof originalPrice === "number" ? (
-        <Text
-          style={{
-            color: t.originalColor,
-            fontSize: t.originalFontSize,
-            textDecorationLine: "line-through",
-          }}
-        >
-          {formatCurrency(originalPrice)}
-        </Text>
-      ) : null}
-      {typeof discount === "number" && discount > 0 ? <Badge variant="discount" label={`${discount}%`} /> : null}
+      <View
+        style={[{ flexDirection: "row", alignItems: "center", columnGap: 4 }, style]}
+      >
+        {typeof originalPrice === "number" ? (
+          <Text
+            style={{
+              color: t.originalColor,
+              fontSize: t.originalFontSize,
+              textDecorationLine: "line-through",
+            }}
+          >
+            {formatCurrency(originalPrice)}
+          </Text>
+        ) : null}
+        {typeof discount === "number" && discount > 0 ? <Badge variant="discount" label={`${discount}%`} /> : null}
+      </View>
       <Text
         style={{
           color: t.priceColor,
@@ -45,5 +53,7 @@ export function Price({
         {formatCurrency(price, { abbreviate })}
       </Text>
     </View>
+
+
   );
 }
