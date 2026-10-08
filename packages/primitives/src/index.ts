@@ -320,7 +320,7 @@ export function resolveCardTheme(variant: CardVariant = "outlined"): CardTheme {
 // Card sections (Card.Header / Card.Content / Card.Footer)
 // ---------------------------------------------------------------------------
 
-export type CardSection = "header" | "content" | "footer";
+export type CardSection = "header" | "content" | "footer" | "media" | "actions";
 
 export interface CardSectionProps {
   children: ReactNode;
@@ -347,7 +347,10 @@ export function resolveCardSectionTheme(section: CardSection): CardSectionTheme 
     case "header":
       return { ...base, borderEdge: "bottom" };
     case "footer":
+    case "actions":
       return { ...base, borderEdge: "top" };
+    case "media":
+      return { ...base, padding: 0, borderWidth: 0, borderEdge: "none" };
     case "content":
     default:
       return { ...base, borderWidth: 0, borderEdge: "none" };
@@ -368,6 +371,21 @@ export interface CardTitleProps {
   /** Typography variant. Defaults to "title". */
   variant?: TextVariant;
   numberOfLines?: number;
+  testID?: string;
+}
+
+export interface CardMediaProps {
+  /** Arbitrary media content (video, custom media, etc.). */
+  children: ReactNode;
+  testID?: string;
+}
+
+export type CardActionsAlign = "start" | "center" | "end" | "between";
+
+export interface CardActionsProps {
+  children: ReactNode;
+  /** Horizontal alignment of the actions. Defaults to "end". */
+  align?: CardActionsAlign;
   testID?: string;
 }
 
