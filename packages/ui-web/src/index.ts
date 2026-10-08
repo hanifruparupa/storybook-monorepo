@@ -21,3 +21,5 @@ export { Modal } from "./Modal/Modal";
 export type { WebModalProps } from "./Modal/Modal";
 export { IconButton } from "./IconButton/IconButton";
 export type { WebIconButtonProps } from "./IconButton/IconButton";
+export { CardHeader, CardContent, CardFooter } from "./Card/CardSections";
+export type { WebCardSectionProps } from "./Card/CardSections";

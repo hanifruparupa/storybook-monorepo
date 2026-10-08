@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Card } from "./Card";
+import { Text } from "../Text/Text";
 
 const meta = {
   title: "Web/Card",
@@ -31,4 +32,20 @@ export const Elevated: Story = {
   args: {
     variant: "elevated",
   },
+};
+
+export const WithSections: Story = {
+  render: (args) => (
+    <Card {...args}>
+      <Card.Header><Text variant="title">Card title</Text></Card.Header>
+      <Card.Content><Text variant="body">Card body content.</Text></Card.Content>
+      <Card.Footer><Text variant="caption">Footer</Text></Card.Footer>
+    </Card>
+  ),
+};
+export const HeaderOnly: Story = {
+  render: (args) => (<Card {...args}><Card.Header><Text variant="title">Header</Text></Card.Header></Card>),
+};
+export const FlushContent: Story = {
+  render: (args) => (<Card {...args}><Card.Content flush><Text variant="body">Flush content (no padding)</Text></Card.Content></Card>),
 };

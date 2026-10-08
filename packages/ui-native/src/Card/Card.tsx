@@ -1,12 +1,14 @@
+import * as React from "react";
 import { View, type StyleProp, type ViewStyle } from "react-native";
 import type { CardProps } from "@repo/primitives";
 import { resolveCardTheme } from "@repo/primitives";
+import { CardContent, CardFooter, CardHeader } from "./CardSections";
 
 export interface NativeCardProps extends CardProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export function Card({ children, variant = "plain", testID, style }: NativeCardProps) {
+export function CardRoot({ children, variant = "plain", testID, style }: NativeCardProps) {
   const t = resolveCardTheme(variant);
   return (
     <View
@@ -34,3 +36,14 @@ export function Card({ children, variant = "plain", testID, style }: NativeCardP
     </View>
   );
 }
+
+export type CardComponent = ((props: NativeCardProps) => React.JSX.Element) & {
+  Header: typeof CardHeader;
+  Content: typeof CardContent;
+  Footer: typeof CardFooter;
+};
+export const Card: CardComponent = Object.assign(CardRoot, {
+  Header: CardHeader,
+  Content: CardContent,
+  Footer: CardFooter,
+});
